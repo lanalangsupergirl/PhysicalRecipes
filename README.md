@@ -1,2 +1,2 @@
-# react-from-scratch
-Awesome React project
+# PhysicalRecipes
+Awesome recipe book on React
