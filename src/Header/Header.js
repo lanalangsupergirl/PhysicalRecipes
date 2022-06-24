@@ -11,10 +11,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
+import MenuIngredients from '../MenuIngredients/MenuIngredients.js'
+import MenuCategory from '../MenuCategory/MenuCategory.js';
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Categories', 'All Recipes'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
@@ -27,14 +28,18 @@ const Header = () => {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+     console.log('click', event.currentTarget);
+
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+     //console.log('click');
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    console.log('click2');
   };
 
   return (
@@ -46,18 +51,21 @@ const Header = () => {
         }}
       >
         <Toolbar disableGutters>
-          <Box
-            component="img"
-            sx={{
-              height: 70,
-              width: 70,
-              maxHeight: { xs: 100, md: 50 },
-              maxWidth: { xs: 100, md: 50 },
-            }}
-            alt=" logo"
-            src="/images/logo.svg"
-          />
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <Box component="a" href="/">
+            <Box
+              component="img"
+              sx={{
+                height: 70,
+                width: 70,
+                maxHeight: { xs: 100, md: 50 },
+                maxWidth: { xs: 100, md: 50 },
+                display: { xs: 'none', md: 'flex' },
+                mr: 1,
+              }}
+              alt=" logo"
+              src="/images/logo.svg"
+            />
+          </Box>
           <Typography
             variant="h5"
             noWrap
@@ -71,7 +79,7 @@ const Header = () => {
               letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
-              pl: '23px'
+              pl: '23px',
             }}
           >
             PHYSICAL RECIPES
@@ -104,16 +112,21 @@ const Header = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
+                textAlign: 'center',
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              <MenuIngredients />
+              <MenuCategory />
+              <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'black', display: 'block' }}>
+                All Recipes
+              </Button>
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -123,8 +136,8 @@ const Header = () => {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
+              fontFamily: 'roboto',
+              fontWeight: 400,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
@@ -135,21 +148,20 @@ const Header = () => {
           <Box
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, flexDirection: 'row-reverse' }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <MenuIngredients />
+            <MenuCategory />
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              All Recipes
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Avatar" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
