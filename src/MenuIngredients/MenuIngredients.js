@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const ingredients = ['Eggs', 'Milk', 'Chicken', 'Beef', 'Avocado', 'Cottage cheese'];
+const ingredients = ['Яйца', 'Молоко', 'Курица', 'Говядина', 'Авокадо', 'Творог', 'Сыр', 'Йогурт'];
 
 export default function MenuIngredients() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,10 +22,16 @@ export default function MenuIngredients() {
         aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        sx={{ my: 2, color: {xs: 'black', md: 'white'}, display: 'block' }}
+        sx={{
+          my: 2,
+          color: { xs: 'black', md: 'white' },
+          display: 'block',
+          fontWeight: 400,
+          fontSize: '1rem',
+        }}
         onClick={handleClick}
       >
-        Ingredients
+        Ингредиенты
       </Button>
       <Menu
         id="demo-positioned-menu"
@@ -43,14 +49,10 @@ export default function MenuIngredients() {
         }}
       >
         {ingredients.map((ingredient) => (
-              <MenuItem
-                key={ingredient}
-                onClick={handleClose}
-
-              >
-                {ingredient}
-              </MenuItem>
-            ))}
+          <MenuItem key={ingredient} onClick={handleClose}>
+            {ingredient}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

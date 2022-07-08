@@ -51,7 +51,7 @@ export default function SearchAppBar() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search ingredient or category" inputProps={{ 'aria-label': 'search' }} />
+            <StyledInputBase placeholder="Поиск ингридиента или катрегории" inputProps={{ 'aria-label': 'search' }} />
           </Search>
     </Box>
   );

@@ -13,9 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIngredients from '../MenuIngredients/MenuIngredients.js'
 import MenuCategory from '../MenuCategory/MenuCategory.js';
+import { Link } from 'react-router-dom'
 
 
-const pages = ['Categories', 'All Recipes'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
@@ -48,10 +48,12 @@ const Header = () => {
         maxWidth="xl"
         sx={{
           backgroundColor: '#ccc',
+          height: 100,
         }}
       >
-        <Toolbar disableGutters>
-          <Box component="a" href="/">
+        <Toolbar disableGutters sx={{ height: 100 }}>
+          {/* <Box component="a" href="/"> */}
+          <Link to="/">
             <Box
               component="img"
               sx={{
@@ -65,25 +67,29 @@ const Header = () => {
               alt=" logo"
               src="/images/logo.svg"
             />
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'roboto',
-              fontWeight: 400,
-              letterSpacing: '.2rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              pl: '23px',
-            }}
-          >
-            PHYSICAL RECIPES
-          </Typography>
+            {/* </Box> */}
+          </Link>
+
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                // mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'roboto',
+                fontWeight: 300,
+                fontSize: '2rem',
+                letterSpacing: '.1rem',
+                color: 'inherit',
+                textDecoration: 'none',
+                // pl: '23px',
+              }}
+            >
+              PHYSICAL RECIPES
+            </Typography>
+
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -113,6 +119,7 @@ const Header = () => {
               sx={{
                 display: { xs: 'block', md: 'none' },
                 textAlign: 'center',
+                alignItems: 'center',
               }}
             >
               {/* {pages.map((page) => (
@@ -123,7 +130,7 @@ const Header = () => {
               <MenuIngredients />
               <MenuCategory />
               <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'black', display: 'block' }}>
-                All Recipes
+                Все рецепты
               </Button>
             </Menu>
           </Box>
@@ -137,8 +144,9 @@ const Header = () => {
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'roboto',
-              fontWeight: 400,
-              letterSpacing: '.3rem',
+              fontWeight: 300,
+              fontSize: '2rem',
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -146,22 +154,30 @@ const Header = () => {
             PHYSICAL RECIPES
           </Typography>
           <Box
-            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, flexDirection: 'row-reverse' }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              flexDirection: 'row-reverse',
+              marginRight: '15px',
+              marginLeft: '15px',
+            }}
           >
             <MenuIngredients />
             <MenuCategory />
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              All Recipes
-            </Button>
+            <Link to="test" style={{ textDecoration: 'none' }}>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 400, fontSize: '1rem' }}
+              >
+                Все Рецепты
+              </Button>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Avatar" src="/images/avatar/1.png" />
               </IconButton>
             </Tooltip>
             <Menu

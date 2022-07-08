@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const category = ['Breakfast', 'Dinner', 'Protein', 'Salad', 'Pastry', 'Dessert', 'Meat'];
+const category = ['Завтрак', 'Обед', 'Ужин', 'Белок', 'Салат', 'Выпечка', 'Десерт', 'Сушка', 'Массонабор', 'Поддержка'];
 
 export default function MenuCategory() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,10 +22,16 @@ export default function MenuCategory() {
         aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        sx={{ my: 2, color: {xs: 'black', md: 'white'}, display: 'block' }}
+        sx={{
+          my: 2,
+          color: { xs: 'black', md: 'white' },
+          display: 'block',
+          fontWeight: 400,
+          fontSize: '1rem',
+        }}
         onClick={handleClick}
       >
-        Category
+        Категории
       </Button>
       <Menu
         id="demo-positioned-menu"
