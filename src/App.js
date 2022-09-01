@@ -1,13 +1,13 @@
 import React from 'react';
 // import { hot } from 'react-hot-loader';
-import "./App.css";
+import './App.css';
 import Header from './Header/Header.js';
 import Container from '@mui/material/Container';
 import SearchBar from './SearchBar/SearchBar.js';
-// import Content from "./Content/Content.js";
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/home/HomePage.js';
-import TestComponent from './pages/testComponent/TestComponent.js'
+import AllRecipes from './pages/allRecipes/AllRecipes.js';
+import RecipeDetails from './pages/details/RecipeDetails';
 
 function App() {
   return (
@@ -26,11 +26,12 @@ function App() {
       </Container>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="/test" element={<TestComponent />} />
+        <Route path="/all" element={<AllRecipes />} />
+        <Route path="/:title" element={<RecipeDetails />} />
       </Routes>
     </div>
   );
 }
 
 // export default hot(module)(App);
-export default App
+export default App;

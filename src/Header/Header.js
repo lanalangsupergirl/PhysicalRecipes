@@ -11,15 +11,19 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import MenuIngredients from '../MenuIngredients/MenuIngredients.js'
+import MenuIngredients from '../MenuIngredients/MenuIngredients.js';
 import MenuCategory from '../MenuCategory/MenuCategory.js';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { showFullRecipe } from '../store/fullRecipeSlice';
 
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
+const settings = ['Profile', 'Account', 'Favorite', 'Logout'];
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,18 +32,17 @@ const Header = () => {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-     console.log('click', event.currentTarget);
-
+    console.log('click', event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-     //console.log('click');
+    dispatch(showFullRecipe(false));
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    console.log('click2');
+    // console.log('click2');
   };
 
   return (
@@ -52,7 +55,6 @@ const Header = () => {
         }}
       >
         <Toolbar disableGutters sx={{ height: 100 }}>
-          {/* <Box component="a" href="/"> */}
           <Link to="/">
             <Box
               component="img"
@@ -67,29 +69,27 @@ const Header = () => {
               alt=" logo"
               src="/images/logo.svg"
             />
-            {/* </Box> */}
           </Link>
 
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                // mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'roboto',
-                fontWeight: 300,
-                fontSize: '2rem',
-                letterSpacing: '.1rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                // pl: '23px',
-              }}
-            >
-              PHYSICAL RECIPES
-            </Typography>
-
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              // mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'roboto',
+              fontWeight: 300,
+              fontSize: '2rem',
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              // pl: '23px',
+            }}
+          >
+            PHYSICAL RECIPES
+          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -129,9 +129,17 @@ const Header = () => {
               ))} */}
               <MenuIngredients />
               <MenuCategory />
-              <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'black', display: 'block' }}>
-                Все рецепты
-              </Button>
+              <Link to="all" style={{ textDecoration: 'none' }}>
+                <Button
+                  onClick={() => {
+                    navigate('all', { replace: true });
+                    handleCloseNavMenu();
+                  }}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
+                >
+                  Все рецепты
+                </Button>
+              </Link>
             </Menu>
           </Box>
           <Typography
@@ -164,7 +172,7 @@ const Header = () => {
           >
             <MenuIngredients />
             <MenuCategory />
-            <Link to="test" style={{ textDecoration: 'none' }}>
+            <Link to="all" style={{ textDecoration: 'none' }}>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block', fontWeight: 400, fontSize: '1rem' }}
@@ -197,9 +205,15 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                <Link
+                  to={`/settings/${setting}`}
+                  style={{ color: 'inherit', textDecoration: 'inherit' }}
+                  key={setting}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>

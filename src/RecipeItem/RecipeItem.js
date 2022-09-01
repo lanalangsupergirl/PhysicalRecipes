@@ -7,65 +7,88 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Box from '@mui/material/Box';
-// import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-
-
-// const ExpandMore = styled((props) => {
-//   const { expand, ...other } = props;
-//   return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-//   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//   marginLeft: 'auto',
-//   transition: theme.transitions.create('transform', {
-//     duration: theme.transitions.duration.shortest,
-//   }),
-// }));
+import { useSelector, useDispatch } from 'react-redux';
+import { addFavorite, removeFavorite } from '../store/setFavoriteSlice';
+import { useState } from 'react';
 
 export default function RecipeItem(props) {
+  const { title, src, subheader, alt, description, id, onItemClick } = props;
 
-  const [fullRecipe, setFullRecipe] = React.useState(false);
+  const handleItemClick = () => {
+    if (typeof onItemClick === 'undefined') {
+      return;
+    }
 
-    const handleClickFull = () => {
-      setFullRecipe(!fullRecipe);
-    };
+    onItemClick(id);
+    console.log('onItemClick id', id);
+  };
 
-    console.log(fullRecipe)
+  const dispatch = useDispatch();
 
-  const { title, src, subheader, alt, description, text, id } = props;
+  const favoriteRecipes = useSelector((state) => state.favoriteRecipes.favoriteRecipes);
+
+  const [isFavorite, setIsFavorite] = useState(
+    favoriteRecipes !== null ? favoriteRecipes.includes(id) : false,
+  );
+
+  //console.log('flag-favorite', isFavorite);
+
+  const handleFavoriteClick = React.useCallback(
+    (e) => {
+      e.preventDefault();
+
+      setIsFavorite(!isFavorite);
+      // console.log('isFav', isFavorite);
+
+      if (!isFavorite) {
+        dispatch(addFavorite(id));
+      } else {
+        dispatch(removeFavorite(id));
+      }
+    },
+    [isFavorite],
+  );
+
   return (
-
-    <Card sx={{ maxWidth: 345 }} id={id}>
+    <Card
+      onClick={handleItemClick}
+      sx={{
+        maxWidth: 345,
+        minWidth: 345,
+        height: '96%',
+        backgroundColor: 'rgba(236, 236, 236, 1)',
+        margin: '10px',
+        cursor: typeof onItemClick === 'undefined' ? 'default' : 'pointer',
+      }}
+      id={id}
+    >
       <CardHeader
+        sx={{ height: '88px' }}
         action={
-          <IconButton aria-label="add to favorites">
+          <IconButton
+            aria-label="add to favorites"
+            onClick={handleFavoriteClick}
+            sx={isFavorite ? { color: 'red' } : { color: 'rgba(0, 0, 0, 0.54)' }}
+          >
             <FavoriteIcon />
           </IconButton>
         }
         title={title}
         subheader={subheader}
       />
-      <CardMedia component="a" href="/">
-        <Box
-          component="img"
-          src={src}
-          width="100%"
-          alt={alt}
-          full={fullRecipe}
-          onClick={handleClickFull}
-        />
+      <CardMedia
+      // component="a"
+      // onClick={handleItemClick}
+      // sx={{
+      //   cursor: typeof onItemClick === 'undefined' ? 'default' : 'pointer',
+      // }}
+      >
+        <Box component="img" src={src} height="330px" width="350px" alt={alt} />
       </CardMedia>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-        {fullRecipe ?
-        <CardContent >
-        <Typography component={'span'} variant="body2" color="text.secondary">
-            <ReactMarkdown>{text}</ReactMarkdown>
-        </Typography>
-         </CardContent>
-         : ''}
       </CardContent>
     </Card>
   );

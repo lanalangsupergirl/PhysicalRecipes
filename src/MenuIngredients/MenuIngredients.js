@@ -2,8 +2,19 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Link } from 'react-router-dom';
 
-const ingredients = ['Яйца', 'Молоко', 'Курица', 'Говядина', 'Авокадо', 'Творог', 'Сыр', 'Йогурт'];
+const ingredients = [
+  'Яйца',
+  'Молоко',
+  'Курица',
+  'Говядина',
+  'Авокадо',
+  'Творог',
+  'Сыр',
+  'Йогурт',
+  'Морепродукты',
+];
 
 export default function MenuIngredients() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +61,12 @@ export default function MenuIngredients() {
       >
         {ingredients.map((ingredient) => (
           <MenuItem key={ingredient} onClick={handleClose}>
-            {ingredient}
+            <Link
+              to={`/ingredients/${ingredient}`}
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
+            >
+              {ingredient}
+            </Link>
           </MenuItem>
         ))}
       </Menu>

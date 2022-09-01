@@ -2,8 +2,8 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-const category = ['Завтрак', 'Обед', 'Ужин', 'Белок', 'Салат', 'Выпечка', 'Десерт', 'Сушка', 'Массонабор', 'Поддержка'];
+import { categories } from '../utils';
+import { Link } from 'react-router-dom';
 
 export default function MenuCategory() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -48,9 +48,14 @@ export default function MenuCategory() {
           horizontal: 'left',
         }}
       >
-        {category.map((item) => (
+        {categories.map((item) => (
           <MenuItem key={item} onClick={handleClose}>
-            {item}
+            <Link
+              to={`/categories/${item}`}
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
+            >
+              {item}
+            </Link>
           </MenuItem>
         ))}
       </Menu>

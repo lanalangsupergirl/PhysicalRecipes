@@ -1,8 +1,10 @@
 import * as React from 'react';
-import Content from "../../Content/Content"
+import { useSelector } from 'react-redux';
+import TitlePage from '../../TitlePage/TitlePage';
+import SearchResults from '../../SearchResults/SearchResults';
 
 export default function HomePage() {
-  return (
-    <Content />
-  )
+  const flag = useSelector((state) => state.search.flag);
+
+  return <>{flag === true ? <SearchResults /> : <TitlePage />}</>;
 }
