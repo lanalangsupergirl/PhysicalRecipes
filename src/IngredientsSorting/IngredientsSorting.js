@@ -1,14 +1,27 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import RecipeItem from '../../RecipeItem/RecipeItem.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { showFullRecipe, currentRecipeId } from '../../store/fullRecipeSlice';
+import { useParams } from 'react-router-dom';
+import RecipeItem from '../RecipeItem/RecipeItem';
 import { Link } from 'react-router-dom';
+import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function AllRecipes() {
+export default function IngredientsSorting() {
+  const { ingredient } = useParams();
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+
+  let filteredIngredients = [];
+
+  dataRecipes.forEach((recipe) => {
+    let ing = recipe.ingredients;
+
+    for (let i = 0; i < ing.length; i++) {
+      if (ing[i] === ingredient) {
+        filteredIngredients.push(recipe);
+      }
+    }
+  });
   const dispatch = useDispatch();
 
   const handleOnItemClick = React.useCallback(
@@ -20,16 +33,16 @@ export default function AllRecipes() {
   );
 
   return (
-    <Container disableGutters maxWidth="100%">
-      {/* <Typography variant="h4">все рецепты</Typography> */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {dataRecipes.map((recipe) => (
+    <Container>
+      <Box sx={{ display: 'flex' }}>
+        {filteredIngredients.map((recipe, index) => (
           <Link
             to={`/${recipe.title}`}
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             key={'item' + recipe.id}
           >
             <RecipeItem
+              index={index}
               title={recipe.title}
               src={recipe.images}
               subheader={recipe['macros-info']}

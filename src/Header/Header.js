@@ -122,11 +122,6 @@ const Header = () => {
                 alignItems: 'center',
               }}
             >
-              {/* {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))} */}
               <MenuIngredients />
               <MenuCategory />
               <Link to="all" style={{ textDecoration: 'none' }}>
@@ -135,7 +130,13 @@ const Header = () => {
                     navigate('all', { replace: true });
                     handleCloseNavMenu();
                   }}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: 'black',
+                    display: 'block',
+                    fontWeight: 400,
+                    fontSize: '1rem',
+                  }}
                 >
                   Все рецепты
                 </Button>
@@ -209,8 +210,9 @@ const Header = () => {
                   to={`/settings/${setting}`}
                   style={{ color: 'inherit', textDecoration: 'inherit' }}
                   key={setting}
+                  onClick={handleCloseUserMenu}
                 >
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 </Link>

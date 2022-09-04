@@ -35,6 +35,7 @@ export default function MenuCategory() {
       </Button>
       <Menu
         id="demo-positioned-menu"
+        sx={{ top: '45px', opacity: 0.9 }}
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}
@@ -49,14 +50,15 @@ export default function MenuCategory() {
         }}
       >
         {categories.map((item) => (
-          <MenuItem key={item} onClick={handleClose}>
-            <Link
-              to={`/categories/${item}`}
-              style={{ color: 'inherit', textDecoration: 'inherit' }}
-            >
+          <Link
+            to={`/categories/${item}`}
+            style={{ color: 'inherit', textDecoration: 'inherit' }}
+            onClick={handleClose}
+          >
+            <MenuItem key={item} sx={{ color: 'black', fontWeight: 400, fontSize: '1rem' }}>
               {item}
-            </Link>
-          </MenuItem>
+            </MenuItem>
+          </Link>
         ))}
       </Menu>
     </div>

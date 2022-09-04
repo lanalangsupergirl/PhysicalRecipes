@@ -53,10 +53,11 @@ export default function RecipeItem(props) {
     <Card
       onClick={handleItemClick}
       sx={{
-        maxWidth: 345,
-        minWidth: 345,
-        height: '96%',
+        maxWidth: 315,
+        minWidth: 315,
+        height: '94%',
         backgroundColor: 'rgba(236, 236, 236, 1)',
+        borderRadius: '10px',
         margin: '10px',
         cursor: typeof onItemClick === 'undefined' ? 'default' : 'pointer',
       }}
@@ -83,7 +84,7 @@ export default function RecipeItem(props) {
       //   cursor: typeof onItemClick === 'undefined' ? 'default' : 'pointer',
       // }}
       >
-        <Box component="img" src={src} height="330px" width="350px" alt={alt} />
+        <Box component="img" src={src} height="310px" width="350px" alt={alt} />
       </CardMedia>
       <CardContent>
         <Typography variant="body2" color="text.secondary">

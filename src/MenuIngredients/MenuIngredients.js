@@ -5,15 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 
 const ingredients = [
-  'Яйца',
-  'Молоко',
-  'Курица',
-  'Говядина',
-  'Авокадо',
-  'Творог',
-  'Сыр',
-  'Йогурт',
-  'Морепродукты',
+  'яйца',
+  'молоко',
+  'курица',
+  'говядина',
+  'авокадо',
+  'творог',
+  'сыр',
+  'йогурт',
+  'морепродукты',
 ];
 
 export default function MenuIngredients() {
@@ -46,6 +46,7 @@ export default function MenuIngredients() {
       </Button>
       <Menu
         id="demo-positioned-menu"
+        sx={{ top: '45px', opacity: 0.9 }}
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}
@@ -60,14 +61,13 @@ export default function MenuIngredients() {
         }}
       >
         {ingredients.map((ingredient) => (
-          <MenuItem key={ingredient} onClick={handleClose}>
-            <Link
-              to={`/ingredients/${ingredient}`}
-              style={{ color: 'inherit', textDecoration: 'inherit' }}
-            >
-              {ingredient}
-            </Link>
-          </MenuItem>
+          <Link
+            to={`/ingredients/${ingredient}`}
+            style={{ color: 'inherit', textDecoration: 'inherit' }}
+            onClick={handleClose}
+          >
+            <MenuItem key={ingredient}>{ingredient}</MenuItem>
+          </Link>
         ))}
       </Menu>
     </div>

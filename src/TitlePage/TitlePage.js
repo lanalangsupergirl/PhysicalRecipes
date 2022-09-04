@@ -43,7 +43,7 @@ export default function TitlePage() {
   return (
     <Container
       disableGutters
-      maxWidth="xl"
+      maxWidth="100%"
       sx={{
         display: { md: 'flex' },
         pt: '55px',
@@ -74,7 +74,7 @@ export default function TitlePage() {
                     />
                   </Link>
                 ))
-                .slice(0, 3)}
+                .slice(0, 4)}
             </Box>
           </React.Fragment>
         ))}
