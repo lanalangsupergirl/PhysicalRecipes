@@ -120,6 +120,7 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
                 textAlign: 'center',
                 alignItems: 'center',
+                opacity: 0.9
               }}
             >
               <MenuIngredients />
@@ -147,7 +148,7 @@ const Header = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

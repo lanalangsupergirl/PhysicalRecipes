@@ -8,7 +8,7 @@ export default function FullRecipeCard(props) {
   const { text, image, title } = props;
 
   return (
-    <Container disableGutters>
+    <Container disableGutters sx={{m: 0}}>
       <Box
         component="img"
         sx={{

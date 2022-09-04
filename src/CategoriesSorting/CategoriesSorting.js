@@ -34,8 +34,8 @@ export default function CategoriesSorting() {
       );
 
     return (
-      <Container>
-        <Box sx={{ display: 'flex' }}>
+      <Container disableGutters maxWidth="100%">
+        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
           {filteredCategories.map((recipe, index) => (
             <Link
               to={`/${recipe.title}`}

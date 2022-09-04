@@ -52,7 +52,7 @@ export default function TitlePage() {
       <Box>
         {randomCategories.map((category) => (
           <React.Fragment key={category + 'fragment'}>
-            <Typography variant="h4">{category}</Typography>
+            <Typography variant="h4" sx={{pl: '12px'}}>{category.toUpperCase()}</Typography>
             <Box sx={{ display: 'flex' }}>
               {filtered[category]
                 .map((recipe, index) => (

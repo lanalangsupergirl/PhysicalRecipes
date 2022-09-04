@@ -33,8 +33,8 @@ export default function IngredientsSorting() {
   );
 
   return (
-    <Container>
-      <Box sx={{ display: 'flex' }}>
+    <Container disableGutters maxWidth="100%" >
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {filteredIngredients.map((recipe, index) => (
           <Link
             to={`/${recipe.title}`}
