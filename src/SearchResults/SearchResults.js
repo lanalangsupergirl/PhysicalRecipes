@@ -34,27 +34,33 @@ export default function SearchResults() {
   return (
     <Container disableGutters sx={{ pt: '55px' }}>
       {/* <Typography variant="h4">Результат поиска</Typography> */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        {filtered.map((recipe) => (
-          <Link
-            to={`/${recipe.title}`}
-            style={{ color: 'inherit', textDecoration: 'inherit' }}
-            key={recipe.title + 'fragment'}
-          >
-            <RecipeItem
-              key={recipe.title + 'item' + recipe.id}
-              title={recipe.title}
-              src={recipe.images}
-              subheader={recipe['macros-info']}
-              alt={recipe.title}
-              description={recipe.description}
-              text={recipe.text}
-              id={recipe.id}
-              onItemClick={handleOnItemClick}
-            />
-          </Link>
-        ))}
-      </Box>
+      {filtered.length !== 0 ? (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+          {filtered.map((recipe) => (
+            <Link
+              to={`/${recipe.title}`}
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
+              key={recipe.title + 'fragment'}
+            >
+              <RecipeItem
+                key={recipe.title + 'item' + recipe.id}
+                title={recipe.title}
+                src={recipe.images}
+                subheader={recipe['macros-info']}
+                alt={recipe.title}
+                description={recipe.description}
+                text={recipe.text}
+                id={recipe.id}
+                onItemClick={handleOnItemClick}
+              />
+            </Link>
+          ))}
+        </Box>
+      ) : (
+        <Typography variant="h4" sx={{fontFamily: 'roboto', fontWeight: 300}}>
+          Ничего не найдено
+        </Typography>
+      )}
     </Container>
   );
 }
