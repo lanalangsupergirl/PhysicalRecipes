@@ -13,8 +13,11 @@ const searchSlice = createSlice({
     searchInputChange(state, action) {
       state.searchInput = action.payload;
     },
+    clearSearchInput(state, action) {
+      state.searchInput = action.payload;
+    }
   },
 });
 
-export const { changeFlag, searchInputChange } = searchSlice.actions;
+export const { changeFlag, searchInputChange, clearSearchInput } = searchSlice.actions;
 export default searchSlice.reducer;
