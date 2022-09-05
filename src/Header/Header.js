@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showFullRecipe } from '../store/fullRecipeSlice';
+import { clearSearchInput } from '../store/searchSlice'
 
 const settings = ['Profile', 'Account', 'Favorite', 'Logout'];
 
@@ -38,6 +39,7 @@ const Header = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
     dispatch(showFullRecipe(false));
+    dispatch(clearSearchInput(''));
   };
 
   const handleCloseUserMenu = () => {
@@ -120,7 +122,7 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
                 textAlign: 'center',
                 alignItems: 'center',
-                opacity: 0.9
+                opacity: 0.9,
               }}
             >
               <MenuIngredients />
@@ -130,6 +132,7 @@ const Header = () => {
                   onClick={() => {
                     navigate('all', { replace: true });
                     handleCloseNavMenu();
+                    dispatch(clearSearchInput(''))
                   }}
                   sx={{
                     my: 2,

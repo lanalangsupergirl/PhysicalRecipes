@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
+import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFlag, searchInputChange } from '../store/searchSlice';
+import { changeFlag, searchInputChange, clearSearchInput } from '../store/searchSlice';
 import { useDebounce } from '../hooks/debounce';
 
 const Search = styled('div')(({ theme }) => ({
@@ -27,6 +28,15 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const ClearIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 30),
+  // position: 'absolute',
+  // pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -77,9 +87,13 @@ export default function SearchBar() {
     console.log(debounced);
   }, [debounced]);
 
+  const handleClearInput = React.useCallback(() => {
+    dispatch(clearSearchInput(''));
+  });
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Search>
+    <Box sx={{ flexGrow: 1, maxWidth: '900px' }}>
+      <Search sx={{ display: 'flex' }}>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
@@ -89,6 +103,18 @@ export default function SearchBar() {
           onChange={handleChangeInput}
           value={searchInput}
         />
+        <ClearIconWrapper>
+          <ClearIcon
+            onClick={handleClearInput}
+            sx={{
+              fill: 'lightgray',
+              '&:hover': {
+                fill: 'black',
+              },
+              cursor: 'pointer'
+            }}
+          />
+        </ClearIconWrapper>
       </Search>
     </Box>
   );

@@ -4,15 +4,19 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { categories } from '../utils';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearSearchInput } from '../store/searchSlice';
 
 export default function MenuCategory() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    dispatch(clearSearchInput(''));
   };
 
   return (
@@ -52,12 +56,11 @@ export default function MenuCategory() {
         {categories.map((item) => (
           <Link
             to={`/categories/${item}`}
+            key={item}
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             onClick={handleClose}
           >
-            <MenuItem key={item} sx={{ color: 'black', fontWeight: 400, fontSize: '1rem' }}>
-              {item}
-            </MenuItem>
+            <MenuItem sx={{ color: 'black', fontWeight: 400, fontSize: '1rem' }}>{item}</MenuItem>
           </Link>
         ))}
       </Menu>

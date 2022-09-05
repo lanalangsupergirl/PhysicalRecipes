@@ -63,10 +63,11 @@ export default function MenuIngredients() {
         {ingredients.map((ingredient) => (
           <Link
             to={`/ingredients/${ingredient}`}
+            key={ingredient}
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             onClick={handleClose}
           >
-            <MenuItem key={ingredient}>{ingredient}</MenuItem>
+            <MenuItem>{ingredient}</MenuItem>
           </Link>
         ))}
       </Menu>

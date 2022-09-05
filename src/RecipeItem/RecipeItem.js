@@ -9,21 +9,22 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Box from '@mui/material/Box';
 import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../store/setFavoriteSlice';
+import { clearSearchInput } from '../store/searchSlice';
 import { useState } from 'react';
 
 export default function RecipeItem(props) {
   const { title, src, subheader, alt, description, id, onItemClick } = props;
 
+  const dispatch = useDispatch();
+
   const handleItemClick = () => {
     if (typeof onItemClick === 'undefined') {
       return;
     }
-
     onItemClick(id);
+    dispatch(clearSearchInput(''));
     console.log('onItemClick id', id);
   };
-
-  const dispatch = useDispatch();
 
   const favoriteRecipes = useSelector((state) => state.favoriteRecipes.favoriteRecipes);
 

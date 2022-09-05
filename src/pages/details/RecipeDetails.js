@@ -4,13 +4,15 @@ import Button from '@mui/material/Button';
 import FullRecipeCard from '../../FullRecipeCard/FullRecipeCard';
 import { useNavigate } from 'react-router-dom';
 import { getRecipeById } from '../../utils';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearSearchInput } from '../../store/searchSlice'
 
 export default function RecipeDetails() {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
   const recipeId = useSelector((state) => state.fullRecipe.recipeId);
   const currentItem = recipeId ? getRecipeById(dataRecipes, recipeId) : undefined;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Box sx={{ paddingTop: '50px' }}>
@@ -23,6 +25,7 @@ export default function RecipeDetails() {
         }}
         onClick={() => {
           navigate('/', { replace: true });
+          dispatch(clearSearchInput(''));
         }}
       >
         Назад

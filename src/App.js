@@ -6,10 +6,10 @@ import Container from '@mui/material/Container';
 import SearchBar from './SearchBar/SearchBar.js';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/home/HomePage.js';
-import AllRecipes from './pages/allRecipes/AllRecipes.js';
+import AllData from './pages/allData/AllData.js';
 import RecipeDetails from './pages/details/RecipeDetails';
 import CategoriesSort from './pages/sorting/CategoriesSort';
-import IngredientsSort from './pages/sorting/IngredientsSort'
+import IngredientsSort from './pages/sorting/IngredientsSort';
 
 function App() {
   return (
@@ -22,13 +22,14 @@ function App() {
           backgroundColor: '#7c808e',
           display: { md: 'flex' },
           pt: '88px',
+          justifyContent: 'center',
         }}
       >
         <SearchBar />
       </Container>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="/all" element={<AllRecipes />} />
+        <Route path="/all" element={<AllData />} />
         <Route path="/:title" element={<RecipeDetails />} />
         <Route path="/categories/:category" element={<CategoriesSort />} />
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
