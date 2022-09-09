@@ -24,7 +24,7 @@ export default function RecipeDetails() {
           '&:hover': { backgroundColor: '#b5b3b3' },
         }}
         onClick={() => {
-          navigate('/', { replace: true });
+          navigate(-1);
           dispatch(clearSearchInput(''));
         }}
       >
