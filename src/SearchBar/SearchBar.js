@@ -34,8 +34,8 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const ClearIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 30),
-  // position: 'absolute',
+  // padding: theme.spacing(0, 30),
+  position: 'relative',
   // pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '60ch',
+      width: '85ch',
       height: '4ch',
     },
   },
