@@ -14,10 +14,12 @@ export default function TitlePage() {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
 
   let filtered = {};
+  console.log('filtered', filtered);
 
   dataRecipes.forEach((recipe) => {
     for (let i = 0; i < randomCategories.length; i++) {
       let cat = randomCategories[i];
+
       if (!filtered[cat]) {
         filtered[cat] = [];
       }
@@ -27,6 +29,7 @@ export default function TitlePage() {
       }
 
       filtered[cat].push(recipe);
+      return;
     }
   });
 
