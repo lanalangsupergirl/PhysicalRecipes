@@ -18,7 +18,7 @@ function App() {
   const dispatch = useDispatch();
 
 useEffect(() => {
-  fetch('http://localhost:8080/recipes', { mode: 'no-cors' })
+  fetch('http://localhost:8080/recipes')
     .then((response) => response.json())
     .then((json) => console.log(json));
 }, []);
