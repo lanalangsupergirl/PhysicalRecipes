@@ -1,6 +1,7 @@
 import React from 'react';
 // import { hot } from 'react-hot-loader';
 import './App.css';
+import { useEffect } from 'react';
 import Header from './Header/Header.js';
 import Container from '@mui/material/Container';
 import SearchBar from './SearchBar/SearchBar.js';
@@ -10,8 +11,20 @@ import AllData from './pages/allData/AllData.js';
 import RecipeDetails from './pages/details/RecipeDetails';
 import CategoriesSort from './pages/sorting/CategoriesSort';
 import IngredientsSort from './pages/sorting/IngredientsSort';
+import { getRecipes } from './store/dataRecipesSlice';
+import { useDispatch } from 'react-redux';
 
 function App() {
+  const dispatch = useDispatch();
+
+useEffect(() => {
+  fetch('http://localhost:8080/recipes', { mode: 'no-cors' })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+}, []);
+
+  //dispatch(getRecipes(JSON.parse(data)))
+
   return (
     <div className="App">
       <Header />
