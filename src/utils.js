@@ -4,10 +4,7 @@ export function getMultipleRandom(arr, num) {
 }
 
 export function getRecipeById(recipes, id) {
-  console.log('getRecipeById recipes', recipes);
-  console.log('getRecipeById id', id);
   const item = recipes.find((recipe) => recipe.id === id);
-
   return item;
 }
 
@@ -22,3 +19,9 @@ export const categories = [
   'массонабор',
   'поддержка',
 ];
+
+export function capitalize(str) {
+  if (!str) return str;
+
+  return str[0].toUpperCase() + str.slice(1);
+}

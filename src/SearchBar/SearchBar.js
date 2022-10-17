@@ -33,14 +33,15 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const ClearIconWrapper = styled('div')(({ theme }) => ({
-  // padding: theme.spacing(0, 30),
-  position: 'relative',
-  // pointerEvents: 'none',
+const ClearIconWrapper = styled('div')({
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  right: '20px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}));
+});
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -54,6 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '85ch',
       height: '4ch',
     },
+    textOverflow: 'ellipsis',
   },
 }));
 
@@ -111,7 +113,7 @@ export default function SearchBar() {
               '&:hover': {
                 fill: 'black',
               },
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
           />
         </ClearIconWrapper>
@@ -120,8 +122,3 @@ export default function SearchBar() {
   );
 }
 
-// const handleKeyDown = (event) => {
-//   if (event.key === 'Enter') {
-//     console.log('smth');
-//   }
-// };

@@ -9,10 +9,11 @@ import { Link } from 'react-router-dom';
 
 export default function SearchResults() {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+  const recipes = dataRecipes?.recipes;
 
   const searchInput = useSelector((state) => state.search.searchInput);
 
-  let filtered = dataRecipes.filter((recipe) => {
+  let filtered = recipes.filter((recipe) => {
     return (
       recipe.ingredients.join().includes(searchInput.toLowerCase()) ||
       recipe.title.toLowerCase().includes(searchInput.toLowerCase()) ||
@@ -52,12 +53,13 @@ export default function SearchResults() {
                 text={recipe.text}
                 id={recipe.id}
                 onItemClick={handleOnItemClick}
+                categories={recipe.categories}
               />
             </Link>
           ))}
         </Box>
       ) : (
-        <Typography variant="h4" sx={{fontFamily: 'roboto', fontWeight: 300}}>
+        <Typography variant="h4" sx={{ fontFamily: 'roboto', fontWeight: 300 }}>
           Ничего не найдено
         </Typography>
       )}

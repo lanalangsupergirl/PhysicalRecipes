@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { capitalize } from '../utils';
 import { Link } from 'react-router-dom';
 
 const ingredients = [
@@ -46,7 +47,7 @@ export default function MenuIngredients() {
       </Button>
       <Menu
         id="demo-positioned-menu"
-        sx={{ top: '45px', opacity: 0.9 }}
+        sx={{ top: '45px', opacity: 0.9}}
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}
@@ -67,7 +68,7 @@ export default function MenuIngredients() {
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             onClick={handleClose}
           >
-            <MenuItem>{ingredient}</MenuItem>
+            <MenuItem>{capitalize(ingredient)}</MenuItem>
           </Link>
         ))}
       </Menu>

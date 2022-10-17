@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
+import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -11,11 +12,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../store/setFavoriteSlice';
 import { clearSearchInput } from '../store/searchSlice';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function RecipeItem(props) {
-  const { title, src, subheader, alt, description, id, onItemClick } = props;
+  const { title, src, subheader, alt, description, id, categories, onItemClick } = props;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleItemClick = () => {
     if (typeof onItemClick === 'undefined') {
@@ -56,7 +59,7 @@ export default function RecipeItem(props) {
       sx={{
         maxWidth: 315,
         minWidth: 315,
-        height: '94%',
+        height: '96%',
         backgroundColor: 'rgba(236, 236, 236, 1)',
         borderRadius: '10px',
         margin: '10px',
@@ -91,6 +94,33 @@ export default function RecipeItem(props) {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
+        <Box sx={{ mt: '10px' }}>
+          {/* <Typography>Категории:</Typography> */}
+          <Typography variant="body2" color="text.secondary">
+              {categories.map((category) => (
+                  <Button
+                    sx={{
+                      backgroundColor: '#ccc',
+                      padding: '2px',
+                      mr: '6px',
+                      mb: '6px',
+                      opacity: 0.6,
+                      color: 'black',
+                      '&:hover': { backgroundColor: '#b5b3b3', opacity: 1 },
+                    }}
+                    variant="contained"
+                    size="small"
+                    key={category + 'item'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/categories/${category}`);
+                    }}
+                  >
+                    {category.toUpperCase() + ' '}
+                  </Button>
+              ))}
+          </Typography>
+        </Box>
       </CardContent>
     </Card>
   );

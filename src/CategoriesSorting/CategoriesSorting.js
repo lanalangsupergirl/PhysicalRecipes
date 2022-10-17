@@ -11,10 +11,11 @@ import { useParams } from 'react-router-dom';
 export default function CategoriesSorting() {
   const { category } = useParams();
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+  const recipes = dataRecipes?.recipes;
 
   let filteredCategories = [];
 
-  dataRecipes.forEach((recipe) => {
+  recipes.forEach((recipe) => {
     let cat = recipe.categories;
     for (let i = 0; i < cat.length; i++) {
       if (cat[i] === category) {
@@ -35,6 +36,9 @@ export default function CategoriesSorting() {
 
   return (
     <Container disableGutters maxWidth="100%">
+      <Typography variant="h4" sx={{ pl: '12px', mb: '15px', mt: '50px' }}>
+        {category.toUpperCase()}
+      </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {filteredCategories.map((recipe, index) => (
           <Link
@@ -52,6 +56,7 @@ export default function CategoriesSorting() {
               text={recipe.text}
               onItemClick={handleOnItemClick}
               id={recipe.id}
+              categories={recipe.categories}
             />
           </Link>
         ))}

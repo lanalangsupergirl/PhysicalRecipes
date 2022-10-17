@@ -11,19 +11,17 @@ import AllData from './pages/allData/AllData.js';
 import RecipeDetails from './pages/details/RecipeDetails';
 import CategoriesSort from './pages/sorting/CategoriesSort';
 import IngredientsSort from './pages/sorting/IngredientsSort';
-import { getRecipes } from './store/dataRecipesSlice';
-import { useDispatch } from 'react-redux';
+import { fetchRecipes } from './store/dataRecipesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.dataRecipes);
 
-useEffect(() => {
-  fetch('http://localhost:8080/recipes')
-    .then((response) => response.json())
-    .then((json) => console.log(json));
-}, []);
-
-  //dispatch(getRecipes(JSON.parse(data)))
+  useEffect(() => {
+    dispatch(fetchRecipes());
+    console.log('fetchRecipes');
+  }, []);
 
   return (
     <div className="App">
@@ -40,6 +38,8 @@ useEffect(() => {
       >
         <SearchBar />
       </Container>
+      {status === 'loading' && <h1>Loading...</h1>}
+      {error && <h2>Error {error}</h2>}
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="/all" element={<AllData />} />

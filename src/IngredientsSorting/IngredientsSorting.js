@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import RecipeItem from '../RecipeItem/RecipeItem';
@@ -10,10 +11,11 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function IngredientsSorting() {
   const { ingredient } = useParams();
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+  const recipes = dataRecipes?.recipes;
 
   let filteredIngredients = [];
 
-  dataRecipes.forEach((recipe) => {
+  recipes.forEach((recipe) => {
     let ing = recipe.ingredients;
 
     for (let i = 0; i < ing.length; i++) {
@@ -33,7 +35,10 @@ export default function IngredientsSorting() {
   );
 
   return (
-    <Container disableGutters maxWidth="100%" >
+    <Container disableGutters maxWidth="100%">
+      <Typography variant="h4" sx={{ pl: '12px', mb: '15px', mt: '50px' }}>
+        {ingredient.toUpperCase()}
+      </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {filteredIngredients.map((recipe, index) => (
           <Link
@@ -51,6 +56,7 @@ export default function IngredientsSorting() {
               text={recipe.text}
               onItemClick={handleOnItemClick}
               id={recipe.id}
+              categories={recipe.categories}
             />
           </Link>
         ))}

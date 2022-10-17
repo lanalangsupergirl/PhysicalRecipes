@@ -16,22 +16,25 @@ export default function TitlePage() {
   let filtered = {};
   console.log('filtered', filtered);
 
-  dataRecipes.forEach((recipe) => {
-    for (let i = 0; i < randomCategories.length; i++) {
-      let cat = randomCategories[i];
+  const recipes = dataRecipes?.recipes;
 
-      if (!filtered[cat]) {
-        filtered[cat] = [];
+  recipes?.length &&
+    recipes.forEach((recipe) => {
+      for (let i = 0; i < randomCategories.length; i++) {
+        let cat = randomCategories[i];
+
+        if (!filtered[cat]) {
+          filtered[cat] = [];
+        }
+
+        if (recipe.categories.indexOf(cat) === -1) {
+          continue;
+        }
+
+        filtered[cat].push(recipe);
+        return;
       }
-
-      if (recipe.categories.indexOf(cat) === -1) {
-        continue;
-      }
-
-      filtered[cat].push(recipe);
-      return;
-    }
-  });
+    });
 
   const dispatch = useDispatch();
 
@@ -43,22 +46,26 @@ export default function TitlePage() {
     [currentRecipeId, showFullRecipe],
   );
 
+  if (Object.keys(filtered).length === 0) {
+    return null;
+  }
+
   return (
     <Container
       disableGutters
       maxWidth="100%"
       sx={{
         display: { md: 'flex' },
-        pt: '55px',
+        pt: '35px',
       }}
     >
       <Box>
         {randomCategories.map((category) => (
           <React.Fragment key={category + 'fragment'}>
-            <Typography variant="h4" sx={{ pl: '12px' }}>
+            <Typography variant="h4" sx={{ pl: '12px', mb: '15px', mt: '20px' }}>
               {category.toUpperCase()}
             </Typography>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
               {filtered[category]
                 .map((recipe, index) => (
                   <Link
@@ -76,6 +83,7 @@ export default function TitlePage() {
                       text={recipe.text}
                       onItemClick={handleOnItemClick}
                       id={recipe.id}
+                      categories={recipe.categories}
                     />
                   </Link>
                 ))

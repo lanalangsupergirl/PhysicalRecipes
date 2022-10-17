@@ -122,7 +122,7 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
                 textAlign: 'center',
                 alignItems: 'center',
-                opacity: 0.9,
+                padding: '12px'
               }}
             >
               <MenuIngredients />

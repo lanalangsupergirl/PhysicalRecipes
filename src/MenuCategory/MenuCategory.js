@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { categories } from '../utils';
+import { capitalize } from '../utils'
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { clearSearchInput } from '../store/searchSlice';
@@ -60,7 +61,7 @@ export default function MenuCategory() {
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             onClick={handleClose}
           >
-            <MenuItem sx={{ color: 'black', fontWeight: 400, fontSize: '1rem' }}>{item}</MenuItem>
+            <MenuItem sx={{ color: 'black', fontWeight: 400, fontSize: '1rem'}}>{capitalize(item)}</MenuItem>
           </Link>
         ))}
       </Menu>
