@@ -27,7 +27,7 @@ export default function RecipeItem(props) {
     onItemClick(id);
     dispatch(clearSearchInput(''));
     console.log('onItemClick id', id);
-  };
+  };;
 
   const favoriteRecipes = useSelector((state) => state.favoriteRecipes.favoriteRecipes);
 

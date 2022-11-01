@@ -17,9 +17,9 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showFullRecipe } from '../store/fullRecipeSlice';
-import { clearSearchInput } from '../store/searchSlice'
+import { clearSearchInput } from '../store/searchSlice';
+import { settings } from '../utils';
 
-const settings = ['Profile', 'Account', 'Favorite', 'Logout'];
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -188,7 +188,7 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Открыть настройки">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Avatar" src="/images/avatar/1.png" />
               </IconButton>

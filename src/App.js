@@ -23,6 +23,7 @@ function App() {
     console.log('fetchRecipes');
   }, []);
 
+
   return (
     <div className="App">
       <Header />
@@ -43,7 +44,7 @@ function App() {
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="/all" element={<AllData />} />
-        <Route path="/:title" element={<RecipeDetails />} />
+        <Route path="/id=:id" element={<RecipeDetails />} />
         <Route path="/categories/:category" element={<CategoriesSort />} />
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
       </Routes>

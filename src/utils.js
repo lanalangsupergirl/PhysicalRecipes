@@ -8,6 +8,18 @@ export function getRecipeById(recipes, id) {
   return item;
 }
 
+export const ingredients = [
+  'яйца',
+  'молоко',
+  'курица',
+  'говядина',
+  'авокадо',
+  'творог',
+  'сыр',
+  'йогурт',
+  'морепродукты',
+];
+
 export const categories = [
   'завтрак',
   'обед',
@@ -19,6 +31,8 @@ export const categories = [
   'массонабор',
   'поддержка',
 ];
+
+export const settings = ['Профиль', 'Аккаунт', 'Избранное', 'Выход'];
 
 export function capitalize(str) {
   if (!str) return str;

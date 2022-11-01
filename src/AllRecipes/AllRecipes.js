@@ -40,10 +40,10 @@ export default function AllRecipes() {
             <Typography variant="h4" sx={{ pl: '12px', mb: '15px' }}>
               ВСЕ РЕЦЕПТЫ
             </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
               {recipes.map((recipe) => (
                 <Link
-                  to={`/${recipe.title}`}
+                  to={`/id=${recipe.id}`}
                   style={{ color: 'inherit', textDecoration: 'inherit' }}
                   key={'item' + recipe.id}
                 >

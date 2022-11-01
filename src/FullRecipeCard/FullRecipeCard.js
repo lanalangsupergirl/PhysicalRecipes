@@ -8,12 +8,54 @@ import SearchResults from '../SearchResults/SearchResults';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearSearchInput } from '../store/searchSlice';
+import { useEffect } from 'react';
+import { fetchRecipe } from '../store/dataRecipesSlice';
+import { useParams } from 'react-router-dom';
 
 export default function FullRecipeCard(props) {
-  const { text, image, title } = props;
+  const { id } = props;
+
+  let url = useParams();
+
   const flag = useSelector((state) => state.search.flag);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+  console.log('dataRec', dataRecipes);
+
+  const recipe = useSelector((state) => state.dataRecipes.recipe);
+  console.log('recipe', recipe);
+
+  useEffect(() => {
+    if (dataRecipes?.length === 0) {
+      dispatch(fetchRecipe(url.id));
+    }
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const currentItem = recipe;
+  console.log('currentItem', currentItem);
+
+  let currentRecipe = {};
+
+  if (dataRecipes?.recipes?.length > 0) {
+    currentRecipe = dataRecipes.recipes.find((recipe) => {
+      return recipe.id === id;
+    });
+  }
+
+  console.log('currentRecipe', currentRecipe);
+
+  let renderData = currentRecipe ? currentRecipe : currentItem;
+  console.log('renderData', renderData);
+
+  // if (!renderData) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
@@ -37,6 +79,9 @@ export default function FullRecipeCard(props) {
               Назад
             </Button>
           </Box>
+          <Typography variant="h4" sx={{ mb: '15px' }}>
+            {renderData.title}
+          </Typography>
           <Box
             component="img"
             sx={{
@@ -46,11 +91,11 @@ export default function FullRecipeCard(props) {
               maxWidth: { xs: 100, md: 250 },
               mr: 1,
             }}
-            src={image}
-            alt={title}
+            src={renderData.images}
+            alt={renderData.title}
           ></Box>
           {/* <Typography component={'span'} variant="body2" color="text.secondary"></Typography> */}
-          <ReactMarkdown>{text}</ReactMarkdown>
+          <ReactMarkdown>{renderData.text}</ReactMarkdown>
         </Container>
       )}
     </>

@@ -9,6 +9,8 @@ import { getMultipleRandom, categories } from '../utils';
 import { Link } from 'react-router-dom';
 
 export default function TitlePage() {
+  const url = 'http://localhost:8080';
+
   let randomCategories = getMultipleRandom(categories, 3);
 
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
@@ -69,18 +71,17 @@ export default function TitlePage() {
               {filtered[category]
                 .map((recipe, index) => (
                   <Link
-                    to={`/${recipe.title}`}
+                    to={`id=${recipe.id}`}
                     style={{ color: 'inherit', textDecoration: 'inherit' }}
                     key={category + 'item' + recipe.id}
                   >
                     <RecipeItem
                       index={index}
                       title={recipe.title}
-                      src={recipe.images}
+                      src={url + recipe.images}
                       subheader={recipe['macros-info']}
                       alt={recipe.title}
                       description={recipe.description}
-                      text={recipe.text}
                       onItemClick={handleOnItemClick}
                       id={recipe.id}
                       categories={recipe.categories}

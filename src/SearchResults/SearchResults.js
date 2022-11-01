@@ -39,7 +39,7 @@ export default function SearchResults() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
           {filtered.map((recipe) => (
             <Link
-              to={`/${recipe.title}`}
+              to={`/id=${recipe.id}`}
               style={{ color: 'inherit', textDecoration: 'inherit' }}
               key={recipe.title + 'fragment'}
             >

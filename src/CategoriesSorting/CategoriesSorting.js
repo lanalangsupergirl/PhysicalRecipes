@@ -42,7 +42,7 @@ export default function CategoriesSorting() {
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {filteredCategories.map((recipe, index) => (
           <Link
-            to={`/${recipe.title}`}
+            to={`/id=${recipe.id}`}
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             key={'item' + recipe.id}
           >

@@ -4,18 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { capitalize } from '../utils';
 import { Link } from 'react-router-dom';
-
-const ingredients = [
-  'яйца',
-  'молоко',
-  'курица',
-  'говядина',
-  'авокадо',
-  'творог',
-  'сыр',
-  'йогурт',
-  'морепродукты',
-];
+import { ingredients } from '../utils';
 
 export default function MenuIngredients() {
   const [anchorEl, setAnchorEl] = React.useState(null);
