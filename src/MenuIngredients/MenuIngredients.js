@@ -5,15 +5,23 @@ import MenuItem from '@mui/material/MenuItem';
 import { capitalize } from '../utils';
 import { Link } from 'react-router-dom';
 import { ingredients } from '../utils';
+import { useDispatch } from 'react-redux';
+import { clearSearchInput, hideSearchBar } from '../store/searchSlice';
 
 export default function MenuIngredients() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+    dispatch(clearSearchInput(''));
+    dispatch(hideSearchBar(false));
   };
 
   return (
@@ -36,7 +44,7 @@ export default function MenuIngredients() {
       </Button>
       <Menu
         id="demo-positioned-menu"
-        sx={{ top: '45px', opacity: 0.9}}
+        sx={{ top: '45px', opacity: 0.9 }}
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}

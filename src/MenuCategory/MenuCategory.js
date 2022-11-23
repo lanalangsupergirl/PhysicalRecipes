@@ -3,10 +3,10 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { categories } from '../utils';
-import { capitalize } from '../utils'
+import { capitalize } from '../utils';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearSearchInput } from '../store/searchSlice';
+import { clearSearchInput, hideSearchBar } from '../store/searchSlice';
 
 export default function MenuCategory() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -18,6 +18,7 @@ export default function MenuCategory() {
   const handleClose = () => {
     setAnchorEl(null);
     dispatch(clearSearchInput(''));
+    dispatch(hideSearchBar(false));
   };
 
   return (
@@ -61,7 +62,9 @@ export default function MenuCategory() {
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             onClick={handleClose}
           >
-            <MenuItem sx={{ color: 'black', fontWeight: 400, fontSize: '1rem'}}>{capitalize(item)}</MenuItem>
+            <MenuItem sx={{ color: 'black', fontWeight: 400, fontSize: '1rem' }}>
+              {capitalize(item)}
+            </MenuItem>
           </Link>
         ))}
       </Menu>

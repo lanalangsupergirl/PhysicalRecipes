@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice'
 import { Link } from 'react-router-dom';
 import SearchResults from '../SearchResults/SearchResults';
+import { urlImg } from '../utils';
 
 export default function AllRecipes() {
 
@@ -49,8 +50,8 @@ export default function AllRecipes() {
                 >
                   <RecipeItem
                     title={recipe.title}
-                    src={recipe.images}
-                    subheader={recipe['macros-info']}
+                    src={urlImg + recipe.images}
+                    subheader={recipe.macros}
                     alt={recipe.title}
                     description={recipe.description}
                     text={recipe.text}

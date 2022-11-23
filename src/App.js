@@ -11,6 +11,8 @@ import AllData from './pages/allData/AllData.js';
 import RecipeDetails from './pages/details/RecipeDetails';
 import CategoriesSort from './pages/sorting/CategoriesSort';
 import IngredientsSort from './pages/sorting/IngredientsSort';
+import AddRecipe from './AddRecipe/AddRecipe';
+import EditRecipe from './EditRecipe/EditRecipe';
 import { fetchRecipes } from './store/dataRecipesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,22 +25,31 @@ function App() {
     console.log('fetchRecipes');
   }, []);
 
+  const hideBar = useSelector((state) => state.search.hideBar);
 
   return (
     <div className="App">
       <Header />
-      <Container
-        maxWidth="xl"
-        sx={{
-          height: 200,
-          backgroundColor: '#7c808e',
-          display: { md: 'flex' },
-          pt: '88px',
-          justifyContent: 'center',
-        }}
-      >
-        <SearchBar />
-      </Container>
+      {hideBar ? (
+        <Container
+          sx={{
+            display: 'none',
+          }}
+        />
+      ) : (
+        <Container
+          maxWidth="xl"
+          sx={{
+            height: 200,
+            backgroundColor: '#7c808e',
+            display: { md: 'flex' },
+            pt: '88px',
+            justifyContent: 'center',
+          }}
+        >
+          <SearchBar />
+        </Container>
+      )}
       {status === 'loading' && <h1>Loading...</h1>}
       {error && <h2>Error {error}</h2>}
       <Routes>
@@ -47,6 +58,8 @@ function App() {
         <Route path="/id=:id" element={<RecipeDetails />} />
         <Route path="/categories/:category" element={<CategoriesSort />} />
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
+        <Route path="/add-recipe" element={<AddRecipe />} />
+        <Route path="/edit-recipe" element={<EditRecipe />} />
       </Routes>
     </div>
   );

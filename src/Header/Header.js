@@ -17,9 +17,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showFullRecipe } from '../store/fullRecipeSlice';
-import { clearSearchInput } from '../store/searchSlice';
+import { clearSearchInput, hideSearchBar } from '../store/searchSlice';
 import { settings } from '../utils';
-
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -122,7 +121,7 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
                 textAlign: 'center',
                 alignItems: 'center',
-                padding: '12px'
+                padding: '12px',
               }}
             >
               <MenuIngredients />
@@ -132,7 +131,8 @@ const Header = () => {
                   onClick={() => {
                     navigate('all', { replace: true });
                     handleCloseNavMenu();
-                    dispatch(clearSearchInput(''))
+                    dispatch(clearSearchInput(''));
+                    dispatch(hideSearchBar(false));
                   }}
                   sx={{
                     my: 2,
@@ -143,6 +143,24 @@ const Header = () => {
                   }}
                 >
                   Все рецепты
+                </Button>
+              </Link>
+              <Link to="add-recipe" style={{ textDecoration: 'none' }}>
+                <Button
+                  onClick={() => {
+                    setAnchorElNav(null);
+                    dispatch(hideSearchBar(true));
+                    dispatch(clearSearchInput(''));
+                  }}
+                  sx={{
+                    my: 2,
+                    color: 'black',
+                    display: 'block',
+                    fontWeight: 400,
+                    fontSize: '1rem',
+                  }}
+                >
+                  Добавить рецепт
                 </Button>
               </Link>
             </Menu>
@@ -179,10 +197,25 @@ const Header = () => {
             <MenuCategory />
             <Link to="all" style={{ textDecoration: 'none' }}>
               <Button
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  handleCloseNavMenu;
+                  dispatch(hideSearchBar(false));
+                }}
                 sx={{ my: 2, color: 'white', display: 'block', fontWeight: 400, fontSize: '1rem' }}
               >
                 Все Рецепты
+              </Button>
+            </Link>
+            <Link to="add-recipe" style={{ textDecoration: 'none' }}>
+              <Button
+                onClick={() => {
+                  dispatch(hideSearchBar(true));
+                  dispatch(clearSearchInput(''));
+                  handleCloseNavMenu;
+                }}
+                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 400, fontSize: '1rem' }}
+              >
+                Добавить рецепт
               </Button>
             </Link>
           </Box>

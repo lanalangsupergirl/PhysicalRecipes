@@ -11,9 +11,11 @@ import { clearSearchInput } from '../store/searchSlice';
 import { useEffect } from 'react';
 import { fetchRecipe } from '../store/dataRecipesSlice';
 import { useParams } from 'react-router-dom';
+import { urlImg } from '../utils';
 
 export default function FullRecipeCard(props) {
   const { id } = props;
+
 
   let url = useParams();
 
@@ -68,6 +70,7 @@ export default function FullRecipeCard(props) {
               variant="contained"
               sx={{
                 backgroundColor: '#ccc',
+                borderRadius: '18px',
                 mb: '45px',
                 '&:hover': { backgroundColor: '#b5b3b3' },
               }}
@@ -91,7 +94,7 @@ export default function FullRecipeCard(props) {
               maxWidth: { xs: 100, md: 250 },
               mr: 1,
             }}
-            src={renderData.images}
+            src={urlImg + renderData.images}
             alt={renderData.title}
           ></Box>
           {/* <Typography component={'span'} variant="body2" color="text.secondary"></Typography> */}

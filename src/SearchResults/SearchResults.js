@@ -6,6 +6,7 @@ import RecipeItem from '../RecipeItem/RecipeItem';
 import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { urlImg } from '../utils';
 
 export default function SearchResults() {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
@@ -46,8 +47,8 @@ export default function SearchResults() {
               <RecipeItem
                 key={recipe.title + 'item' + recipe.id}
                 title={recipe.title}
-                src={recipe.images}
-                subheader={recipe['macros-info']}
+                src={urlImg + recipe.images}
+                subheader={recipe.macros}
                 alt={recipe.title}
                 description={recipe.description}
                 text={recipe.text}

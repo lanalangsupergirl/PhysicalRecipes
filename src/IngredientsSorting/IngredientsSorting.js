@@ -7,6 +7,7 @@ import RecipeItem from '../RecipeItem/RecipeItem';
 import { Link } from 'react-router-dom';
 import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { urlImg } from '../utils';
 
 export default function IngredientsSorting() {
   const { ingredient } = useParams();
@@ -49,8 +50,8 @@ export default function IngredientsSorting() {
             <RecipeItem
               index={index}
               title={recipe.title}
-              src={recipe.images}
-              subheader={recipe['macros-info']}
+              src={urlImg + recipe.images}
+              subheader={recipe.macros}
               alt={recipe.title}
               description={recipe.description}
               text={recipe.text}

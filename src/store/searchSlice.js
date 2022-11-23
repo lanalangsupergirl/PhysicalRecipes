@@ -5,6 +5,7 @@ const searchSlice = createSlice({
   initialState: {
     flag: false,
     searchInput: '',
+    hideBar: false,
   },
   reducers: {
     changeFlag(state, action) {
@@ -15,9 +16,13 @@ const searchSlice = createSlice({
     },
     clearSearchInput(state, action) {
       state.searchInput = action.payload;
-    }
+    },
+    hideSearchBar(state, action) {
+      state.hideBar = action.payload;
+    },
   },
 });
 
-export const { changeFlag, searchInputChange, clearSearchInput } = searchSlice.actions;
+export const { changeFlag, searchInputChange, clearSearchInput, hideSearchBar } =
+  searchSlice.actions;
 export default searchSlice.reducer;

@@ -7,9 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice';
 import { getMultipleRandom, categories } from '../utils';
 import { Link } from 'react-router-dom';
+import { urlImg } from '../utils';
 
 export default function TitlePage() {
-  const url = 'http://localhost:8080';
 
   let randomCategories = getMultipleRandom(categories, 3);
 
@@ -78,8 +78,8 @@ export default function TitlePage() {
                     <RecipeItem
                       index={index}
                       title={recipe.title}
-                      src={url + recipe.images}
-                      subheader={recipe['macros-info']}
+                      src={urlImg + recipe.images}
+                      subheader={recipe.macros}
                       alt={recipe.title}
                       description={recipe.description}
                       onItemClick={handleOnItemClick}

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { showFullRecipe, currentRecipeId } from '../store/fullRecipeSlice';
 import { useParams } from 'react-router-dom';
+import { urlImg } from '../utils';
 
 export default function CategoriesSorting() {
   const { category } = useParams();
@@ -49,8 +50,8 @@ export default function CategoriesSorting() {
             <RecipeItem
               index={index}
               title={recipe.title}
-              src={recipe.images}
-              subheader={recipe['macros-info']}
+              src={urlImg + recipe.images}
+              subheader={recipe.macros}
               alt={recipe.title}
               description={recipe.description}
               text={recipe.text}
