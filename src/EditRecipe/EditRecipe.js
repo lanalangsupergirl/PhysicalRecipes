@@ -14,7 +14,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { hideSearchBar } from '../store/searchSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -61,21 +62,57 @@ function getStyles(name, personName, theme) {
 }
 
 export default function EditRecipe(props) {
-  let navigate = useNavigate();
+  let { id } = props;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const theme = useTheme();
+  let url = useParams();
 
-//   const { title, macros, description, id, categories } = props;
+  const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
+  console.log('dataRec', dataRecipes);
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [macros, setMacros] = useState('');
-  const [text, setText] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  const recipe = useSelector((state) => state.dataRecipes.recipe);
+  console.log('recipe', recipe);
+
+  useEffect(() => {
+    if (dataRecipes?.length === 0) {
+      dispatch(fetchRecipe(url.id));
+    }
+  }, []);
+
+  console.log('urlid from edit', url.id);
+
+  const currentItem = recipe;
+  console.log('currentItem', currentItem);
+
+  let currentRecipe = {};
+
+  if (dataRecipes?.recipes?.length > 0) {
+    currentRecipe = dataRecipes.recipes.find((recipe) => {
+      return recipe.id === id;
+    });
+  }
+
+  let renderData = currentRecipe ? currentRecipe : currentItem;
+
+//   const [categories, setCategories] = useState([]);
+//   const [ingredients, setIngredients] = useState([]);
+
+  const [editedRecipe, setEditedRecipe] = useState({
+    id: renderData.id,
+    title: renderData.title,
+    description: renderData.description,
+    macros: renderData.macros,
+    text: renderData.text,
+    categories: renderData.categories,
+    ingredients: renderData.ingredients,
+  });
+
+  const handleChangeRecipe = (e) => {
+    setEditedRecipe({ ...editedRecipe, [e.target.name]: e.target.value });
+  };
 
   const [hideEl, setHideEl] = useState(false);
-
 
   useEffect(() => {
     if (hideEl === true) {
@@ -86,35 +123,33 @@ export default function EditRecipe(props) {
     }
   }, [hideEl]);
 
-  const handleChangeCat = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setCategories(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+//   const handleChangeCat = (event) => {
+//     const {
+//       target: { value },
+//     } = event;
+//     setCategories(
+//       // On autofill we get a stringified value.
+//       typeof value === 'string' ? value.split(',') : value,
+//     );
+//   };
 
-  const handleChangeIng = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setIngredients(typeof value === 'string' ? value.split(',') : value);
-  };
+//   const handleChangeIng = (event) => {
+//     const {
+//       target: { value },
+//     } = event;
+//     setIngredients(typeof value === 'string' ? value.split(',') : value);
+//   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newRecipe = { title, description, macros, categories, ingredients, text };
-    console.log(newRecipe);
-    console.log(JSON.stringify(newRecipe));
+    console.log('editedRecipe', editedRecipe);
 
     fetch('http://localhost:8080/recipes', {
-      method: 'POST',
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newRecipe),
+      body: JSON.stringify(editedRecipe),
     }).then(() => {
-      console.log('added!');
+      console.log('edited!');
       setHideEl(true);
     });
   };
@@ -124,7 +159,7 @@ export default function EditRecipe(props) {
       {hideEl === true ? (
         <Box sx={{ pt: '55px' }}>
           <Typography variant="h4" sx={{ fontFamily: 'roboto', fontWeight: 300 }}>
-            Рецепт успешно добавлен!
+            Рецепт успешно отредактирован!
           </Typography>
         </Box>
       ) : (
@@ -163,16 +198,16 @@ export default function EditRecipe(props) {
                 label="Название рецепта"
                 variant="standard"
                 name="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={editedRecipe.title}
+                onChange={handleChangeRecipe}
               />
               <TextField
                 id="standard-basic"
                 label="КБЖУ на 100гр/все блюдо"
                 variant="standard"
                 name="macros"
-                value={macros}
-                onChange={(e) => setMacros(e.target.value)}
+                value={editedRecipe.macros}
+                onChange={handleChangeRecipe}
               />
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -183,8 +218,8 @@ export default function EditRecipe(props) {
                   id="demo-multiple-chip"
                   multiple
                   name="categories"
-                  value={categories}
-                  onChange={handleChangeCat}
+                  value={editedRecipe.categories}
+                  onChange={handleChangeRecipe}
                   input={<OutlinedInput id="select-multiple-chip" label="Категории" />}
                   renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -199,7 +234,7 @@ export default function EditRecipe(props) {
                     <MenuItem
                       key={category}
                       value={category}
-                      style={getStyles(category, categories, theme)}
+                      style={getStyles(category, categoryOptions, theme)}
                     >
                       {category}
                     </MenuItem>
@@ -213,8 +248,8 @@ export default function EditRecipe(props) {
                   id="demo-multiple-chip"
                   multiple
                   name="ingredients"
-                  value={ingredients}
-                  onChange={handleChangeIng}
+                  value={editedRecipe.ingredients}
+                  onChange={handleChangeRecipe}
                   input={<OutlinedInput id="select-multiple-chip" label="Ингредиенты" />}
                   renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -229,7 +264,7 @@ export default function EditRecipe(props) {
                     <MenuItem
                       key={ingredient}
                       value={ingredient}
-                      style={getStyles(ingredient, ingredients, theme)}
+                      style={getStyles(ingredient, ingredientOptions, theme)}
                     >
                       {ingredient}
                     </MenuItem>
@@ -244,8 +279,8 @@ export default function EditRecipe(props) {
             placeholder="Краткое описание рецепта"
             multiline
             name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={editedRecipe.description}
+            onChange={handleChangeRecipe}
             sx={{
               '& > :not(style)': { m: 1, width: '73.5ch' },
             }}
@@ -254,11 +289,11 @@ export default function EditRecipe(props) {
             id="outlined-multiline-static"
             label="Рецепт"
             name="text"
-            value={text}
+            value={editedRecipe.text}
             multiline
             rows={10}
             placeholder="Текст рецепта"
-            onChange={(e) => setText(e.target.value)}
+            onChange={handleChangeRecipe}
             sx={{
               '& > :not(style)': { m: 1, width: '73.5ch' },
             }}

@@ -12,13 +12,14 @@ import RecipeDetails from './pages/details/RecipeDetails';
 import CategoriesSort from './pages/sorting/CategoriesSort';
 import IngredientsSort from './pages/sorting/IngredientsSort';
 import AddRecipe from './AddRecipe/AddRecipe';
-import EditRecipe from './EditRecipe/EditRecipe';
+import EditRoute from './pages/EditRoute/EditRoute';
 import { fetchRecipes } from './store/dataRecipesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.dataRecipes);
+  const recipeId = useSelector((state) => state.fullRecipe.recipeId);
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -59,7 +60,7 @@ function App() {
         <Route path="/categories/:category" element={<CategoriesSort />} />
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
-        <Route path="/edit-recipe" element={<EditRecipe />} />
+        <Route path="/edit-recipe:id" element={<EditRoute />} />
       </Routes>
     </div>
   );

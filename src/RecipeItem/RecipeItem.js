@@ -59,7 +59,7 @@ export default function RecipeItem(props) {
     (e) => {
       e.preventDefault();
       dispatch(hideSearchBar(true));
-      navigate('/edit-recipe');
+      navigate(`/edit-recipe${id}`);
     }
   );
 
