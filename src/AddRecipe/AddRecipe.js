@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { fetchRecipes } from '../store/dataRecipesSlice';
 import { useNavigate } from 'react-router-dom';
 import { hideSearchBar } from '../store/searchSlice';
 import { useDispatch } from 'react-redux';
@@ -79,6 +80,7 @@ export default function AddRecipe() {
     if (hideEl === true) {
       return setTimeout(() => {
         dispatch(hideSearchBar(false));
+        dispatch(fetchRecipes());
         navigate('/');
       }, 2000);
     }

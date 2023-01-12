@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { hideSearchBar } from '../store/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchRecipes } from '../store/dataRecipesSlice';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -95,8 +96,8 @@ export default function EditRecipe(props) {
 
   let renderData = currentRecipe ? currentRecipe : currentItem;
 
-//   const [categories, setCategories] = useState([]);
-//   const [ingredients, setIngredients] = useState([]);
+  //   const [categories, setCategories] = useState([]);
+  //   const [ingredients, setIngredients] = useState([]);
 
   const [editedRecipe, setEditedRecipe] = useState({
     id: renderData.id,
@@ -106,6 +107,7 @@ export default function EditRecipe(props) {
     text: renderData.text,
     categories: renderData.categories,
     ingredients: renderData.ingredients,
+    images: renderData.images
   });
 
   const handleChangeRecipe = (e) => {
@@ -118,27 +120,28 @@ export default function EditRecipe(props) {
     if (hideEl === true) {
       return setTimeout(() => {
         dispatch(hideSearchBar(false));
+        dispatch(fetchRecipes());
         navigate('/');
       }, 2000);
     }
   }, [hideEl]);
 
-//   const handleChangeCat = (event) => {
-//     const {
-//       target: { value },
-//     } = event;
-//     setCategories(
-//       // On autofill we get a stringified value.
-//       typeof value === 'string' ? value.split(',') : value,
-//     );
-//   };
+  //   const handleChangeCat = (event) => {
+  //     const {
+  //       target: { value },
+  //     } = event;
+  //     setCategories(
+  //       // On autofill we get a stringified value.
+  //       typeof value === 'string' ? value.split(',') : value,
+  //     );
+  //   };
 
-//   const handleChangeIng = (event) => {
-//     const {
-//       target: { value },
-//     } = event;
-//     setIngredients(typeof value === 'string' ? value.split(',') : value);
-//   };
+  //   const handleChangeIng = (event) => {
+  //     const {
+  //       target: { value },
+  //     } = event;
+  //     setIngredients(typeof value === 'string' ? value.split(',') : value);
+  //   };
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -85,10 +85,6 @@ export default function SearchBar() {
 
   console.log('debounced', debounced);
 
-  useEffect(() => {
-    console.log(debounced);
-  }, [debounced]);
-
   const handleClearInput = React.useCallback(() => {
     dispatch(clearSearchInput(''));
   });

@@ -5,7 +5,7 @@ const FAV = 'favorites';
 const setFavoriteSlice = createSlice({
   name: 'favorite',
   initialState: {
-    favoriteRecipes: JSON.parse(localStorage.getItem(FAV) ?? '[]'),
+    favoriteRecipes: localStorage.getItem(FAV) ? JSON.parse(localStorage.getItem(FAV)) : []
   },
   reducers: {
     addFavorite(state, action) {

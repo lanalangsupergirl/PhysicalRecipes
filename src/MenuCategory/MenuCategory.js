@@ -41,7 +41,7 @@ export default function MenuCategory() {
       </Button>
       <Menu
         id="demo-positioned-menu"
-        sx={{ top: '45px', opacity: 0.9 }}
+        sx={{ top: '45px'}}
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}

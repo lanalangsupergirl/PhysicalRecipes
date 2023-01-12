@@ -15,6 +15,7 @@ import { clearSearchInput } from '../store/searchSlice';
 import { hideSearchBar } from '../store/searchSlice';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CardActions } from '@mui/material';
 
 export default function RecipeItem(props) {
   const { title, src, subheader, alt, description, id, categories, onItemClick } = props;
@@ -29,22 +30,24 @@ export default function RecipeItem(props) {
     onItemClick(id);
     dispatch(clearSearchInput(''));
     console.log('onItemClick id', id);
-  };;
+  };
 
   const favoriteRecipes = useSelector((state) => state.favoriteRecipes.favoriteRecipes);
+  console.log('favoriteRecipes store', favoriteRecipes)
 
   const [isFavorite, setIsFavorite] = useState(
     favoriteRecipes !== null ? favoriteRecipes.includes(id) : false,
   );
 
-  //console.log('flag-favorite', isFavorite);
+  console.log('flag-favorite', isFavorite);
 
   const handleFavoriteClick = React.useCallback(
     (e) => {
+      e.stopPropagation();
       e.preventDefault();
 
       setIsFavorite(!isFavorite);
-      // console.log('isFav', isFavorite);
+      console.log('isFav', isFavorite);
 
       if (!isFavorite) {
         dispatch(addFavorite(id));
@@ -55,13 +58,13 @@ export default function RecipeItem(props) {
     [isFavorite],
   );
 
-  const handleEditClick = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      dispatch(hideSearchBar(true));
-      navigate(`/edit-recipe${id}`);
-    }
-  );
+console.log('local', localStorage.favorites)
+
+  const handleEditClick = React.useCallback((e) => {
+    e.preventDefault();
+    dispatch(hideSearchBar(true));
+    navigate(`/edit-recipe=${id}`);
+  });
 
   return (
     <Card
@@ -77,25 +80,21 @@ export default function RecipeItem(props) {
       }}
       id={id}
     >
-      <CardHeader
-        sx={{ height: '88px' }}
-        action={
-          <>
-            <IconButton
-              aria-label="add to favorites"
-              onClick={handleFavoriteClick}
-              sx={isFavorite ? { color: 'red' } : { color: 'rgba(0, 0, 0, 0.54)' }}
-            >
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton onClick={handleEditClick}>
-              <EditIcon />
-            </IconButton>
-          </>
-        }
-        title={title}
-        subheader={subheader}
-      />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+        <CardHeader sx={{ height: '88px' }} title={title} subheader={subheader} />
+        <CardActions sx={{ display: 'flex', width: 'min-content', flexDirection: 'column' }}>
+          <IconButton
+            aria-label="add to favorites"
+            onClick={handleFavoriteClick}
+            sx={isFavorite ? { color: 'red' } : { color: 'rgba(0, 0, 0, 0.54)' }}
+          >
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton onClick={handleEditClick}>
+            <EditIcon />
+          </IconButton>
+        </CardActions>
+      </Box>
       <CardMedia
       // component="a"
       // onClick={handleItemClick}
@@ -103,7 +102,7 @@ export default function RecipeItem(props) {
       //   cursor: typeof onItemClick === 'undefined' ? 'default' : 'pointer',
       // }}
       >
-        <Box component="img" src={src} height="310px" width="350px" alt={alt} />
+        <Box component="img" src={src} height="310px" width="315px" alt={alt} />
       </CardMedia>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
