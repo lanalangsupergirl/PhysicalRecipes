@@ -82,7 +82,7 @@ export default function AddRecipe() {
         dispatch(hideSearchBar(false));
         dispatch(fetchRecipes());
         navigate('/');
-      }, 2000);
+      }, 3000);
     }
   }, [hideEl]);
 

@@ -107,7 +107,7 @@ export default function EditRecipe(props) {
     text: renderData.text,
     categories: renderData.categories,
     ingredients: renderData.ingredients,
-    images: renderData.images
+    path: renderData.path
   });
 
   const handleChangeRecipe = (e) => {

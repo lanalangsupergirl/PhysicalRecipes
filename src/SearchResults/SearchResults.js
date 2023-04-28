@@ -10,7 +10,7 @@ import { urlImg } from '../utils';
 
 export default function SearchResults() {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
-  const recipes = dataRecipes?.recipes;
+  const recipes = dataRecipes;
 
   const searchInput = useSelector((state) => state.search.searchInput);
 
@@ -47,7 +47,7 @@ export default function SearchResults() {
               <RecipeItem
                 key={recipe.title + 'item' + recipe.id}
                 title={recipe.title}
-                src={urlImg + recipe.images}
+                src={urlImg + recipe.path}
                 subheader={recipe.macros}
                 alt={recipe.title}
                 description={recipe.description}

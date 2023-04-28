@@ -85,7 +85,7 @@ const Header = () => {
               fontSize: '2rem',
               letterSpacing: '.1rem',
               color: 'inherit',
-              textDecoration: 'none',
+              textDecoration: 'none'
               // pl: '23px',
             }}
           >
@@ -125,7 +125,7 @@ const Header = () => {
               }}
             >
               <MenuIngredients />
-              <MenuCategory  />
+              <MenuCategory />
               <Link to="all" style={{ textDecoration: 'none' }}>
                 <Button
                   onClick={() => {
@@ -227,7 +227,7 @@ const Header = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px'}}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{

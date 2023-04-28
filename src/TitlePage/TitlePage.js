@@ -18,7 +18,8 @@ export default function TitlePage() {
   let filtered = {};
   console.log('filtered', filtered);
 
-  const recipes = dataRecipes?.recipes;
+  const recipes = dataRecipes;
+  console.log("check", recipes)
 
   recipes?.length &&
     recipes.forEach((recipe) => {
@@ -78,7 +79,7 @@ export default function TitlePage() {
                     <RecipeItem
                       index={index}
                       title={recipe.title}
-                      src={urlImg + recipe.images}
+                      src={urlImg + recipe.path}
                       subheader={recipe.macros}
                       alt={recipe.title}
                       description={recipe.description}

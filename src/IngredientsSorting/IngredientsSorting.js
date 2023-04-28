@@ -12,7 +12,7 @@ import { urlImg } from '../utils';
 export default function IngredientsSorting() {
   const { ingredient } = useParams();
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
-  const recipes = dataRecipes?.recipes;
+  const recipes = dataRecipes;
 
   let filteredIngredients = [];
 
@@ -50,7 +50,7 @@ export default function IngredientsSorting() {
             <RecipeItem
               index={index}
               title={recipe.title}
-              src={urlImg + recipe.images}
+              src={urlImg + recipe.path}
               subheader={recipe.macros}
               alt={recipe.title}
               description={recipe.description}

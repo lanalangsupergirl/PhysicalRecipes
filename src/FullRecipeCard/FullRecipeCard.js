@@ -26,7 +26,7 @@ export default function FullRecipeCard(props) {
   const dataRecipes = useSelector((state) => state.dataRecipes.dataRecipes);
   console.log('dataRec', dataRecipes);
 
-  const recipe = useSelector((state) => state.dataRecipes.recipe);
+  let recipe = useSelector((state) => state.dataRecipes.recipe);
   console.log('recipe', recipe);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export default function FullRecipeCard(props) {
       dispatch(fetchRecipe(url.id));
     }
   }, []);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,8 +45,8 @@ export default function FullRecipeCard(props) {
 
   let currentRecipe = {};
 
-  if (dataRecipes?.recipes?.length > 0) {
-    currentRecipe = dataRecipes.recipes.find((recipe) => {
+  if (dataRecipes.length > 0) {
+    currentRecipe = dataRecipes.find((recipe) => {
       return recipe.id === id;
     });
   }
@@ -94,7 +95,7 @@ export default function FullRecipeCard(props) {
               maxWidth: { xs: 100, md: 250 },
               mr: 1,
             }}
-            src={urlImg + renderData.images}
+            src={urlImg + renderData.path}
             alt={renderData.title}
           ></Box>
           {/* <Typography component={'span'} variant="body2" color="text.secondary"></Typography> */}
