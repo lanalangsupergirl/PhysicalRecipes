@@ -1,5 +1,4 @@
 import React from 'react';
-// import { hot } from 'react-hot-loader';
 import './App.css';
 import { useEffect } from 'react';
 import Header from './Header/Header.js';
@@ -13,6 +12,8 @@ import CategoriesSort from './pages/sorting/CategoriesSort';
 import IngredientsSort from './pages/sorting/IngredientsSort';
 import AddRecipe from './AddRecipe/AddRecipe';
 import EditRoute from './pages/EditRoute/EditRoute';
+import Favorites from './Favorites/Favorites';
+import Authentication from './Authentication/Authentication';
 import { fetchRecipes } from './store/dataRecipesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,7 +24,6 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchRecipes());
-    console.log('fetchRecipes');
   }, []);
 
   const hideBar = useSelector((state) => state.search.hideBar);
@@ -61,6 +61,8 @@ function App() {
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
         <Route path="/edit-recipe:id" element={<EditRoute />} />
+        <Route path="/settings/:setting" element={<Favorites />}/>
+        <Route path="/signup" element={<Authentication />}/>
       </Routes>
     </div>
   );

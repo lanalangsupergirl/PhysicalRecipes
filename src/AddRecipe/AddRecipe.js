@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
@@ -66,15 +68,22 @@ export default function AddRecipe() {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [macros, setMacros] = useState('');
-  const [text, setText] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [description, setDescription] = useState('');
+  // const [macros, setMacros] = useState('');
+  // const [text, setText] = useState('');
   const [categories, setCategories] = useState([]);
   const [ingredients, setIngredients] = useState([]);
 
-  const [hideEl, setHideEl] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors }, //isValid
+  } = useForm({ mode: 'onChange' });
 
+  const [hideEl, setHideEl] = useState(false);
 
   useEffect(() => {
     if (hideEl === true) {
@@ -90,23 +99,46 @@ export default function AddRecipe() {
     const {
       target: { value },
     } = event;
+    console.log('handleChangeCat event value', value);
     setCategories(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+
+    setValue('categories', typeof value === 'string' ? value.split(',') : value);
   };
+
+  console.log('categories: ', categories);
+  //  console.log('isValid: ', isValid);
 
   const handleChangeIng = (event) => {
     const {
       target: { value },
     } = event;
     setIngredients(typeof value === 'string' ? value.split(',') : value);
+    setValue('ingredients', typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newRecipe = { title, description, macros, categories, ingredients, text };
-    console.log(newRecipe);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const newRecipe = { title, description, macros, categories, ingredients, text };
+  //   console.log(newRecipe);
+  //   console.log(JSON.stringify(newRecipe));
+
+  //   fetch('http://localhost:8080/recipes', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(newRecipe),
+  //   }).then(() => {
+  //     console.log('added!');
+  //     setHideEl(true);
+  //   });
+  // };
+  const onSubmit = (data) => {
+
+    const newRecipe = data;
+    console.log('newRecipe', newRecipe);
     console.log(JSON.stringify(newRecipe));
 
     fetch('http://localhost:8080/recipes', {
@@ -131,7 +163,7 @@ export default function AddRecipe() {
         <Container
           disableGutters
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate
           autoComplete="off"
           maxWidth="100%"
@@ -158,114 +190,206 @@ export default function AddRecipe() {
                 '& > :not(style)': { m: '11px', width: '38ch' },
               }}
             >
-              <TextField
-                id="standard-basic"
-                label="Название рецепта"
-                variant="standard"
+              <Controller
                 name="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: true,
+                  maxLength: 30,
+                }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="standard-basic"
+                    label="Название рецепта"
+                    variant="standard"
+                    name="title"
+                    // value={title}
+                    error={!!errors.title}
+                    helperText={errors?.title ? 'Это поле не может быть пустым' : ''}
+                    // onChange={(e) => setTitle(e.target.value)}
+                  />
+                )}
               />
-              <TextField
-                id="standard-basic"
-                label="КБЖУ на 100гр/все блюдо"
-                variant="standard"
+              <Controller
                 name="macros"
-                value={macros}
-                onChange={(e) => setMacros(e.target.value)}
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: true,
+                  maxLength: 30,
+                }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="standard-basic"
+                    label="КБЖУ на 100гр/все блюдо"
+                    variant="standard"
+                    name="macros"
+                    error={!!errors.macros}
+                    helperText={errors?.macros ? 'Это поле не может быть пустым' : ''}
+                    // value={macros}
+                    // onChange={(e) => setMacros(e.target.value)}
+                  />
+                )}
               />
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel id="demo-multiple-chip-label">Категории</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
+                <Controller
                   name="categories"
-                  value={categories}
-                  onChange={handleChangeCat}
-                  input={<OutlinedInput id="select-multiple-chip" label="Категории" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
+                  control={control}
+                  defaultValue={categories}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <>
+                      <Select
+                        // {...field}
+                        labelId="demo-multiple-chip-label"
+                        id="demo-multiple-chip"
+                        multiple
+                        name="categories"
+                        value={categories}
+                        onChange={handleChangeCat}
+                        input={
+                          <OutlinedInput
+                            id="select-multiple-chip"
+                            label="Категории"
+
+                          />
+                        }
+                        renderValue={(selected) => (
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selected.map((value) => (
+                              <Chip key={value} label={value} />
+                            ))}
+                          </Box>
+                        )}
+                        MenuProps={MenuProps}
+                      >
+                        {categoryOptions.map((category) => (
+                          <MenuItem
+                            key={category}
+                            value={category}
+                            style={getStyles(category, categories, theme)}
+                          >
+                            {category}
+                          </MenuItem>
+                        ))}
+                      </Select>
+
+                      <FormHelperText error={!!errors.categories}>
+                        {errors?.categories ? 'Это поле не может быть пустым' : ''}
+                      </FormHelperText>
+                    </>
                   )}
-                  MenuProps={MenuProps}
-                >
-                  {categoryOptions.map((category) => (
-                    <MenuItem
-                      key={category}
-                      value={category}
-                      style={getStyles(category, categories, theme)}
-                    >
-                      {category}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </FormControl>
               <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel id="demo-multiple-chip-label">Ингредиенты</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
+                <Controller
                   name="ingredients"
-                  value={ingredients}
-                  onChange={handleChangeIng}
-                  input={<OutlinedInput id="select-multiple-chip" label="Ингредиенты" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
+                  control={control}
+                  defaultValue={ingredients}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <>
+                      <Select
+                        labelId="demo-multiple-chip-label"
+                        id="demo-multiple-chip"
+                        multiple
+                        name="ingredients"
+                        value={ingredients}
+                        onChange={handleChangeIng}
+                        input={<OutlinedInput id="select-multiple-chip" label="Ингредиенты" />}
+                        renderValue={(selected) => (
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selected.map((value) => (
+                              <Chip key={value} label={value} />
+                            ))}
+                          </Box>
+                        )}
+                        MenuProps={MenuProps}
+                      >
+                        {ingredientOptions.map((ingredient) => (
+                          <MenuItem
+                            key={ingredient}
+                            value={ingredient}
+                            style={getStyles(ingredient, ingredients, theme)}
+                          >
+                            {ingredient}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      <FormHelperText error={!!errors}>
+                        {errors?.ingredients ? 'Это поле не может быть пустым' : ''}
+                      </FormHelperText>
+                    </>
                   )}
-                  MenuProps={MenuProps}
-                >
-                  {ingredientOptions.map((ingredient) => (
-                    <MenuItem
-                      key={ingredient}
-                      value={ingredient}
-                      style={getStyles(ingredient, ingredients, theme)}
-                    >
-                      {ingredient}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </FormControl>
             </Box>
           </Box>
-          <TextField
-            id="outlined-textarea"
-            label="Описание"
-            placeholder="Краткое описание рецепта"
-            multiline
+          <Controller
             name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            sx={{
-              '& > :not(style)': { m: 1, width: '73.5ch' },
+            control={control}
+            defaultValue=""
+            rules={{
+              maxLength: 100,
             }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="outlined-textarea"
+                label="Описание"
+                placeholder="Краткое описание рецепта"
+                multiline
+                name="description"
+                // value={description}
+                // onChange={(e) => setDescription(e.target.value)}
+                sx={{
+                  '& > :not(style)': { m: 1, width: '73.5ch' },
+                }}
+              />
+            )}
           />
-          <TextField
-            id="outlined-multiline-static"
-            label="Рецепт"
+          <Controller
             name="text"
-            value={text}
-            multiline
-            rows={10}
-            placeholder="Текст рецепта"
-            onChange={(e) => setText(e.target.value)}
-            sx={{
-              '& > :not(style)': { m: 1, width: '73.5ch' },
+            control={control}
+            defaultValue=""
+            rules={{
+              required: true,
             }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="outlined-multiline-static"
+                label="Рецепт"
+                name="text"
+                // value={text}
+                error={!!errors.text}
+                helperText={errors?.text ? 'Это поле не может быть пустым' : ''}
+                multiline
+                rows={10}
+                placeholder="Текст рецепта"
+                // onChange={(e) => setText(e.target.value)}
+                sx={{
+                  '& > :not(style)': { m: 1, width: '73.5ch' },
+                }}
+              />
+            )}
           />
+
           <Button
             variant="contained"
             type="submit"
+            // disabled={!isValid}
             sx={{
               backgroundColor: '#ccc',
               borderRadius: '18px',

@@ -20,7 +20,9 @@ import { showFullRecipe } from '../store/fullRecipeSlice';
 import { clearSearchInput, hideSearchBar } from '../store/searchSlice';
 import { settings } from '../utils';
 
+
 const Header = () => {
+  let isRegister = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,7 +45,6 @@ const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    // console.log('click2');
   };
 
   return (
@@ -85,7 +86,7 @@ const Header = () => {
               fontSize: '2rem',
               letterSpacing: '.1rem',
               color: 'inherit',
-              textDecoration: 'none'
+              textDecoration: 'none',
               // pl: '23px',
             }}
           >
@@ -220,42 +221,93 @@ const Header = () => {
             </Link>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Открыть настройки">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Avatar" src="/images/avatar/1.png" />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <Link
-                  to={`/settings/${setting}`}
-                  style={{ color: 'inherit', textDecoration: 'inherit' }}
-                  key={setting}
-                  onClick={handleCloseUserMenu}
+            </Tooltip> */}
+          <>
+            {isRegister ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Открыть настройки">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Avatar" src="/images/avatar/1.png" />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  <MenuItem>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                </Link>
-              ))}
-            </Menu>
-          </Box>
+                  {settings.map((setting) => (
+                    <Link
+                      to={`/settings/${setting}`}
+                      style={{ color: 'inherit', textDecoration: 'inherit' }}
+                      key={setting}
+                      onClick={handleCloseUserMenu}
+                    >
+                      <MenuItem>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    </Link>
+                  ))}
+                </Menu>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0}}>
+                <Tooltip
+                  title="Регистрация или вход"
+                  placement="bottom-end"
+                  sx={{ backgroundColor: 'red' }}
+                >
+                  <Link
+                    to={'/signup'}
+                    style={{ color: 'inherit', textDecoration: 'inherit' }}
+                    // key={registration}
+                    onClick={handleCloseUserMenu}
+                  >
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Avatar" src="/images/avatar/1.png" sx={{ cursor: 'pointer' }} />
+                    </IconButton>
+                  </Link>
+                </Tooltip>
+                {/* <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+
+                    <MenuItem>
+                      <Typography textAlign="center">Регистрация/Вход</Typography>
+                    </MenuItem> */}
+
+                {/* </Menu> */}
+              </Box>
+            )}
+          </>
         </Toolbar>
       </Container>
     </AppBar>

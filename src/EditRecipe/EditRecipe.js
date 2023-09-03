@@ -16,7 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import { hideSearchBar } from '../store/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchRecipes } from '../store/dataRecipesSlice';
+import { fetchRecipes, fetchRecipe } from '../store/dataRecipesSlice';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -88,8 +89,8 @@ export default function EditRecipe(props) {
 
   let currentRecipe = {};
 
-  if (dataRecipes?.recipes?.length > 0) {
-    currentRecipe = dataRecipes.recipes.find((recipe) => {
+  if (dataRecipes?.length > 0) {
+    currentRecipe = dataRecipes.find((recipe) => {
       return recipe.id === id;
     });
   }

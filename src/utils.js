@@ -32,7 +32,7 @@ export const categories = [
   'поддержка',
 ];
 
-export const settings = ['Профиль', 'Аккаунт', 'Избранное', 'Выход'];
+export const settings = ['Профиль', 'Избранное', 'Выход'];
 
 export function capitalize(str) {
   if (!str) return str;
