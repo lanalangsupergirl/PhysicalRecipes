@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { fetchRecipes } from '../store/dataRecipesSlice';
+// import { fetchRecipes } from '../store/dataRecipesSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
@@ -18,7 +18,7 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function Authentication() {
+export default function LogIn() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,9 +33,9 @@ export default function Authentication() {
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [hideEl, setHideEl] = useState(false);
-  const [isAvailable, setIsAvailable] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);
 
-  console.log('isAvail', isAvailable);
+  console.log('isLog', isLogin);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -49,24 +49,25 @@ export default function Authentication() {
     event.preventDefault();
   };
 
-  useEffect(() => {
-    if (hideEl === true && isAvailable === true) {
-      return setTimeout(() => {
-        dispatch(isLogIn(true));
-
-        dispatch(fetchRecipes());
-
-        navigate('/');
-      }, 3000);
-    }
-  }, [hideEl]);
+//   useEffect(() => {
+//     if (hideEl === true) {
+//       return setTimeout(() => {
+//         dispatch(fetchRecipes());
+//         navigate('/');
+//       }, 3000);
+//     }
+//   }, [hideEl]);
 
   useEffect(() => {
-    setIsAvailable(true);
+    setIsLogin(true);
   }, [login]);
 
+  useEffect(() => {
+    dispatch(isLogIn(true))
+  }, [isLogin === true])
+
   const onSubmit = (data) => {
-    fetch('http://localhost:8080/auth', {
+    fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -74,7 +75,7 @@ export default function Authentication() {
       .then((response) => response.json())
       .then((flag) => {
         if (flag === false) {
-          setIsAvailable(false);
+          setIsLogin(false);
         } else {
           setHideEl(true);
         }
@@ -86,7 +87,7 @@ export default function Authentication() {
       {hideEl === true ? (
         <Box sx={{ pt: '55px' }}>
           <Typography variant="h4" sx={{ fontFamily: 'roboto', fontWeight: 300 }}>
-            Вы успешно зарегистрировались
+            Вы вошли ура-ура
           </Typography>
         </Box>
       ) : (
@@ -96,7 +97,7 @@ export default function Authentication() {
           sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: '55px' }}
         >
           <Typography variant="h4" sx={{ pl: '12px', mb: '15px' }}>
-            Регистрация
+            Вход
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: '55px' }}>
             <FormControl sx={{ m: 1, width: '25ch' }}>
@@ -113,14 +114,11 @@ export default function Authentication() {
                     id="outlined-textarea"
                     label="Логин"
                     name="login"
-                    error={!!errors.login || isAvailable === false}
+                    error={!!errors.login || isLogin === false}
                   />
                 )}
               />
             </FormControl>
-            <Typography variant="h8" sx={{ fontFamily: 'roboto', fontWeight: 300, color: 'red' }}>
-              {isAvailable === true ? '' : 'Этот логин занят'}
-            </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
@@ -161,7 +159,10 @@ export default function Authentication() {
               />
             </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+          <Typography variant="h8" sx={{ fontFamily: 'roboto', fontWeight: 300, color: 'red' }}>
+            {isLogin === true ? '' : 'Ошибка авторизации'}
+          </Typography>
+          {/* <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
               <Controller
                 control={control}
@@ -202,7 +203,7 @@ export default function Authentication() {
                 )}
               />
             </FormControl>
-          </Box>
+          </Box> */}
           <Button
             disabled={!isValid}
             variant="contained"
@@ -216,7 +217,7 @@ export default function Authentication() {
               '&:hover': { backgroundColor: '#b5b3b3' },
             }}
           >
-            Отправить
+            Войти
           </Button>
         </Container>
       )}

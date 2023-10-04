@@ -14,6 +14,7 @@ import AddRecipe from './AddRecipe/AddRecipe';
 import EditRoute from './pages/EditRoute/EditRoute';
 import Favorites from './Favorites/Favorites';
 import Authentication from './Authentication/Authentication';
+import LogIn from './Authentication/LogIn';
 import { fetchRecipes } from './store/dataRecipesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -61,8 +62,9 @@ function App() {
         <Route path="/ingredients/:ingredient" element={<IngredientsSort />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
         <Route path="/edit-recipe:id" element={<EditRoute />} />
-        <Route path="/settings/:setting" element={<Favorites />}/>
-        <Route path="/signup" element={<Authentication />}/>
+        <Route path="/settings/:setting" element={<Favorites />} />
+        <Route path="/signup" element={<Authentication />} />
+        <Route path="/signin" element={<LogIn />} />
       </Routes>
     </div>
   );

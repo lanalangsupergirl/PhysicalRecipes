@@ -24,7 +24,7 @@ export const fetchRecipe = createAsyncThunk(
   async function (id, { rejectWithValue }) {
     try {
       console.log('id', id)
-      const response = await fetch(`http://localhost:8080/recipe?id=${id}`);
+      const response = await fetch(`http://localhost:8080/recipe/id=${id}`);
 
       if (!response.ok) {
         throw new Error('Server Error');

@@ -15,16 +15,19 @@ import MenuIngredients from '../MenuIngredients/MenuIngredients.js';
 import MenuCategory from '../MenuCategory/MenuCategory.js';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { showFullRecipe } from '../store/fullRecipeSlice';
 import { clearSearchInput, hideSearchBar } from '../store/searchSlice';
 import { settings } from '../utils';
 
-
 const Header = () => {
-  let isRegister = false;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  let logIn = useSelector((state) => state.isLogIn.isLogin);
+  console.log("log store", logIn);
+
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -228,7 +231,7 @@ const Header = () => {
               </IconButton>
             </Tooltip> */}
           <>
-            {isRegister ? (
+            {logIn ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Открыть настройки">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -266,24 +269,24 @@ const Header = () => {
                 </Menu>
               </Box>
             ) : (
-              <Box sx={{ flexGrow: 0}}>
+              <Box sx={{ flexGrow: 0 }}>
                 <Tooltip
                   title="Регистрация или вход"
                   placement="bottom-end"
                   sx={{ backgroundColor: 'red' }}
                 >
-                  <Link
+                  {/* <Link
                     to={'/signup'}
                     style={{ color: 'inherit', textDecoration: 'inherit' }}
                     // key={registration}
                     onClick={handleCloseUserMenu}
-                  >
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="Avatar" src="/images/avatar/1.png" sx={{ cursor: 'pointer' }} />
-                    </IconButton>
-                  </Link>
+                  > */}
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Avatar" src="/images/avatar/1.png" sx={{ cursor: 'pointer' }} />
+                  </IconButton>
+                  {/* </Link> */}
                 </Tooltip>
-                {/* <Menu
+                <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
@@ -299,12 +302,27 @@ const Header = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-
+                  <Link
+                    to={'/signup'}
+                    style={{ color: 'inherit', textDecoration: 'inherit' }}
+                    // key={registration}
+                    onClick={handleCloseUserMenu}
+                  >
                     <MenuItem>
-                      <Typography textAlign="center">Регистрация/Вход</Typography>
-                    </MenuItem> */}
-
-                {/* </Menu> */}
+                      <Typography textAlign="center">Регистрация</Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link
+                    to={'/signin'}
+                    style={{ color: 'inherit', textDecoration: 'inherit' }}
+                    // key={registration}
+                    onClick={handleCloseUserMenu}
+                  >
+                  <MenuItem>
+                    <Typography textAlign="center">Вход</Typography>
+                  </MenuItem>
+                  </Link>
+                </Menu>
               </Box>
             )}
           </>
