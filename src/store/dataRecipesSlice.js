@@ -4,7 +4,9 @@ export const fetchRecipes = createAsyncThunk(
   'recipes/fetchRecipes',
   async function (_, { rejectWithValue }) {
     try {
-      const response = await fetch('http://localhost:8080/recipes');
+      const response = await fetch('http://localhost:8080/recipes', {
+        credentials: 'include'
+      });
 
       if (!response.ok) {
         throw new Error('Server Error');
